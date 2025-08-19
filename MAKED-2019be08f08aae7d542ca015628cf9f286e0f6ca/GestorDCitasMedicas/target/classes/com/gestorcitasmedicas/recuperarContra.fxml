@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="1000" prefHeight="690.0" prefWidth="1800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.RecuperarContraController">
+   <children>
+      <!-- Lado izquierdo - Imagen de consulta médica -->
+      <VBox alignment="CENTER" maxWidth="500" minWidth="300" prefWidth="400" style="-fx-background-color: #E7ECF0;">
+         <children>
+            <ImageView fitHeight="400" fitWidth="500" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/docBack.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      
+      <!-- Lado derecho - Formulario de recuperación -->
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #FFFFFF;" vbarPolicy="AS_NEEDED" HBox.hgrow="ALWAYS">
+         <VBox alignment="CENTER" minWidth="500" spacing="30" style="-fx-background-color: #FFFFFF;">
+            <padding>
+               <Insets bottom="40" left="60" right="60" top="40" />
+            </padding>
+         <children>
+            <!-- Botón de regreso -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+               <Button fx:id="btnRegresar" onAction="#regresarALogin" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5; -fx-padding: 8 15;" text="← Regresar" />
+            </HBox>
+            
+            <!-- Icono de medicina -->
+            <HBox alignment="CENTER">
+               <ImageView fitHeight="60" fitWidth="60" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@img/cross.png" />
+                  </image>
+               </ImageView>
+            </HBox>
+            
+            <!-- Título -->
+            <VBox alignment="CENTER" spacing="10">
+               <Label style="-fx-font-weight: bold; -fx-font-size: 28; -fx-text-fill: #3B6F89;" text="Recupera tu cuenta" />
+            </VBox>
+            
+            <!-- Formulario -->
+            <VBox alignment="CENTER" spacing="20">
+               <!-- Campo Correo Electrónico -->
+               <VBox alignment="CENTER_LEFT" spacing="8">
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Correo Electrónico" />
+                  <TextField fx:id="txtCorreo" prefHeight="45" prefWidth="400" promptText="Ingresa tu correo electrónico" style="-fx-background-color: #F5F5F5; -fx-background-radius: 5; -fx-border-radius: 5; -fx-font-size: 14;" />
+               </VBox>
+               
+               <!-- Campo Contraseña -->
+               <VBox alignment="CENTER_LEFT" spacing="8">
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Contraseña" />
+                  <PasswordField fx:id="txtContrasena" prefHeight="45" prefWidth="400" promptText="Ingresa tu contraseña" style="-fx-background-color: #F5F5F5; -fx-background-radius: 5; -fx-border-radius: 5; -fx-font-size: 14;" />
+               </VBox>
+               
+               <!-- Campo Confirmar Contraseña -->
+               <VBox alignment="CENTER_LEFT" spacing="8">
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Confirmar contraseña" />
+                  <PasswordField fx:id="txtConfirmarContrasena" prefHeight="45" prefWidth="400" promptText="Ingresa nuevamente tu contraseña" style="-fx-background-color: #F5F5F5; -fx-background-radius: 5; -fx-border-radius: 5; -fx-font-size: 14;" />
+               </VBox>
+               
+               <!-- Botón Listo -->
+               <Button fx:id="btnListo" onAction="#actualizarContrasena" prefHeight="50" prefWidth="400" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16; -fx-background-radius: 5;" text="Listo" />
+            </VBox>
+            
+            <!-- Enlaces inferiores -->
+            <VBox alignment="CENTER" spacing="10">
+               <Label style="-fx-font-size: 14; -fx-text-fill: #666666;" text="¿No tienes cuenta?" />
+               <Label fx:id="lblCrearCuenta" onMouseClicked="#crearCuenta" style="-fx-font-size: 14; -fx-text-fill: #3B6F89; -fx-font-weight: bold;" text="¡Crea uno ahora!" />
+               
+               <!-- Botón adicional de regreso -->
+               <Button fx:id="btnRegresarInferior" onAction="#regresarALogin" style="-fx-background-color: #6C757D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5; -fx-padding: 10 20;" text="Volver al Inicio de Sesión" />
+            </VBox>
+         </children>
+         </VBox>
+      </ScrollPane>
+   </children>
+</HBox>

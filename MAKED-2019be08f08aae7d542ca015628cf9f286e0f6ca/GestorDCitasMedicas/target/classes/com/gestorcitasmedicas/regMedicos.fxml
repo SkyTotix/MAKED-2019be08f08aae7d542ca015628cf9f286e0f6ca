@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.RegMedicosController">
+   <top>
+      <VBox style="-fx-background-color: #8B4513;" BorderPane.alignment="CENTER">
+         <children>
+            <!-- Barra superior marrón -->
+            <HBox style="-fx-background-color: #8B4513;" prefHeight="30" alignment="CENTER_LEFT">
+               <padding>
+                  <Insets left="15" />
+               </padding>
+               <Label text="Panel de registro de médicos" style="-fx-text-fill: #D3D3D3; -fx-font-size: 12;" />
+            </HBox>
+            
+            <!-- Barra principal con logo y título -->
+            <HBox style="-fx-background-color: #E7ECF0;" prefHeight="77" alignment="CENTER_LEFT">
+               <padding>
+                  <Insets left="15" right="15" />
+               </padding>
+               <children>
+                  <!-- Logo médico -->
+                  <ImageView fitHeight="60" fitWidth="60" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/cross.png" />
+                     </image>
+                  </ImageView>
+                  
+                  <!-- Espaciador -->
+                  <Region HBox.hgrow="ALWAYS" />
+                  
+                  <!-- Título y icono de perfil -->
+                  <HBox spacing="10" alignment="CENTER_RIGHT">
+                     <Label text="Mi Perfil" style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #2F4F4F;" />
+                     <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/miPerfil.png" />
+                        </image>
+                     </ImageView>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <VBox spacing="20" style="-fx-background-color: #FFFFFF;">
+            <padding>
+               <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+            <children>
+               <!-- Título del formulario -->
+               <HBox spacing="10" alignment="CENTER_LEFT">
+                  <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/imed.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Registro de Médico" style="-fx-font-weight: bold; -fx-font-size: 24; -fx-text-fill: #3B6F89;" />
+               </HBox>
+               
+               <!-- Contenido principal -->
+               <HBox spacing="30" alignment="TOP_LEFT">
+                  <!-- Imagen del médico -->
+                  <VBox alignment="TOP_CENTER" spacing="10">
+                     <ImageView fitHeight="248" fitWidth="243" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/profile.png" />
+                        </image>
+                     </ImageView>
+                     <Label text="Foto del Médico" style="-fx-font-style: italic; -fx-text-fill: #666;" />
+                  </VBox>
+                  
+                  <!-- Formulario -->
+                  <VBox spacing="20" VBox.vgrow="ALWAYS">
+                     <children>
+                        <!-- Primera fila: Nombre y Teléfono -->
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Nombre:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="nombreField" promptText="Ingrese nombre completo" prefWidth="280" />
+                           </VBox>
+                           
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Teléfono:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="telefonoField" promptText="Ingrese el teléfono" prefWidth="280" />
+                           </VBox>
+                        </HBox>
+                        
+                        <!-- Segunda fila: Especialidad y Horario -->
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Especialidad:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="especialidadField" promptText="Ingrese la especialidad" prefWidth="280" />
+                           </VBox>
+                           
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Horario:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="horarioField" promptText="Ej: Lunes-Viernes 8:00-17:00" prefWidth="280" />
+                           </VBox>
+                        </HBox>
+                        
+                        <!-- Tercera fila: Cédula y Consultorio -->
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Cédula Profesional:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="cedulaField" promptText="Ingrese la cédula profesional" prefWidth="280" />
+                           </VBox>
+                           
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Consultorio:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="consultorioField" promptText="Ingrese el número de consultorio" prefWidth="280" />
+                           </VBox>
+                        </HBox>
+                        
+                        <!-- Cuarta fila: Correo -->
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Correo Electrónico:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <TextField fx:id="correoField" promptText="Ingrese el correo electrónico" prefWidth="280" />
+                           </VBox>
+                           
+                           <VBox spacing="5" prefWidth="300">
+                              <!-- Espacio vacío para mantener alineación -->
+                           </VBox>
+                        </HBox>
+                        
+                        <!-- Quinta fila: Contraseña y Confirmar Contraseña -->
+                        <HBox spacing="30" alignment="CENTER_LEFT">
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Contraseña:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <PasswordField fx:id="passwordField" promptText="Ingrese la contraseña" prefWidth="280" />
+                           </VBox>
+                           
+                           <VBox spacing="5" prefWidth="300">
+                              <Label text="Confirmar Contraseña:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                              <PasswordField fx:id="confirmPasswordField" promptText="Confirme la contraseña" prefWidth="280" />
+                           </VBox>
+                        </HBox>
+                        
+                        <!-- Botones -->
+                        <HBox spacing="20" alignment="CENTER_RIGHT">
+                           <Button fx:id="btnLimpiar" text="Limpiar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#limpiarFormulario" />
+                           <Button fx:id="btnRegresar" text="Regresar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#regresar" />
+                           <Button fx:id="btnRegistrar" text="Registrar Médico" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#registrarMedico" />
+                        </HBox>
+                        
+                        <!-- Botón de regreso al menú principal -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                           <Button fx:id="btnVolverMenu" text="← Volver al Menú Principal" 
+                                   style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5; -fx-padding: 10 20;" 
+                                   onAction="#volverAlMenuPrincipal" />
+                        </HBox>
+                     </children>
+                  </VBox>
+               </HBox>
+            </children>
+         </VBox>
+      </ScrollPane>
+   </center>
+</BorderPane>

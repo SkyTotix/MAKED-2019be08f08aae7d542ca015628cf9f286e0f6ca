@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="1000" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.ConsultaController">
+   <top>
+      <Pane prefHeight="107.0" prefWidth="1366.0" style="-fx-background-color: #E7ECF0;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="73.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/cross.png" />
+               </image></ImageView>
+            <Button fx:id="btnPerfil" layoutX="988.0" layoutY="21.0" mnemonicParsing="false" onAction="#abrirPerfil" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" />
+            <ImageView fitHeight="60.0" fitWidth="153.0" layoutX="994.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/miPerfil.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: FFFFFF;" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
+         <content>
+                         <VBox prefHeight="750.0" prefWidth="800.0" spacing="10.0" style="-fx-background-color: FFFFFF;">
+               <children>
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 20px;" text="Expedientes clinicos">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                                     <Pane prefHeight="588.0" prefWidth="1000.0" style="-fx-background-color: FFFFFF;">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7b9dbf" height="476.0" layoutX="-4.0" layoutY="-4.0" stroke="#7b9dbf" strokeLineCap="ROUND" strokeWidth="5.0" width="813.0" />
+                        <Button fx:id="btnRegresar" layoutX="608.0" layoutY="482.0" mnemonicParsing="false" onAction="#regresar" prefHeight="30.0" prefWidth="182.0" style="-fx-background-color: #787A7D;" text="Regresar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+            <HBox layoutX="12.0" layoutY="14.0" prefHeight="82.0" prefWidth="817.0">
+               <children>
+                  <VBox prefHeight="113.0" prefWidth="224.0">
+                     <children>
+                        <Label text="Doctor">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblNombreDoctor" prefHeight="17.0" prefWidth="224.0" text="nombre aqui">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="82.0" prefWidth="190.0">
+                     <children>
+                        <Label text="Cedula">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblCedulaDoctor" prefHeight="17.0" prefWidth="192.0" text="cedula aqui">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin></VBox>
+                  <VBox prefHeight="82.0" prefWidth="185.0">
+                     <children>
+                        <Label text="Fecha y hora">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblFechaHora" prefHeight="20.0" prefWidth="218.0" text="fecha aqui">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="82.0" prefWidth="73.0">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Folio">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblFolio" prefHeight="17.0" prefWidth="91.0" text="folio aqui">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children></HBox>
+            <Line endX="778.0" endY="152.0" layoutX="-2.0" layoutY="-56.0" startX="17.0" startY="152.0" stroke="#3b6f89" strokeWidth="3.0" />
+            <Label layoutX="18.0" layoutY="117.0" text="Nombre del paciente:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="19.0" layoutY="158.0" text="CURP:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="273.0" layoutY="158.0" text="Fecha de nacimiento:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="16.0" layoutY="199.0" text="Sintomatologia:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="19.0" layoutY="284.0" text="F/C:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="101.0" layoutY="284.0" text="F/R:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="184.0" layoutY="284.0" text="TA:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="305.0" layoutY="284.0" text="TC:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="448.0" layoutY="284.0" text="Diagnostico:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="340.0" text="Tratamiento:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNombrePaciente" layoutX="164.0" layoutY="116.0" prefHeight="17.0" prefWidth="437.0" style="-fx-border-color: #3B6F89;" text="nombre aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCurpPaciente" layoutX="64.0" layoutY="157.0" prefHeight="20.0" prefWidth="170.0" style="-fx-border-color: #3B6F89;" text="curp aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblFechaNacimiento" layoutX="421.0" layoutY="157.0" prefHeight="20.0" prefWidth="171.0" style="-fx-border-color: #3B6F89;" text="fecha aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblSintomatologia" layoutX="123.0" layoutY="199.0" prefHeight="71.0" prefWidth="471.0" style="-fx-border-color: #3B6F89;" text="Sintomatologia aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblFC" layoutX="45.0" layoutY="283.0" prefHeight="20.0" prefWidth="40.0" style="-fx-border-color: #3B6F89;" text="fc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblFR" layoutX="134.0" layoutY="283.0" prefHeight="20.0" prefWidth="30.0" style="-fx-border-color: #3B6F89;" text="fr">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTA" layoutX="212.0" layoutY="283.0" prefHeight="20.0" prefWidth="70.0" style="-fx-border-color: #3B6F89;" text="ta">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTC" layoutX="330.0" layoutY="283.0" prefHeight="20.0" prefWidth="58.0" style="-fx-border-color: #3B6F89;" text="tc">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDiagnostico" layoutX="528.0" layoutY="284.0" prefHeight="56.0" prefWidth="259.0" style="-fx-border-color: #3B6F89;" text="diagnostico aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTratamiento" layoutX="16.0" layoutY="360.0" prefHeight="101.0" prefWidth="774.0" style="-fx-border-color: #3B6F89;" text="tratamiento aqui">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnModificarExpediente" layoutX="16.0" layoutY="480.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Modificar Expediente" onAction="#modificarExpediente" />
+                        </children>
+                     </Pane>
+                  </children>
+               </VBox>
+            </content>
+         </ScrollPane>
+      </center>
+   <left>
+      <Pane prefHeight="613.0" prefWidth="123.0" style="-fx-background-color: FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="41.0" layoutY="173.0" prefHeight="236.0" prefWidth="32.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b6f89" height="239.0" layoutX="-8.0" layoutY="-6.0" stroke="#3b6f89" strokeLineCap="ROUND" strokeWidth="5.0" width="48.0" />
+                  <VBox layoutX="-3.0" layoutY="-5.0" prefHeight="236.0" prefWidth="40.0">
+                     <children>
+                        <Button fx:id="btnCitas" mnemonicParsing="false" onAction="#abrirCitas" prefHeight="34.0" prefWidth="36.0" style="-fx-background-color: #3b6f89;">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/ical.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnExpedientes" mnemonicParsing="false" onAction="#abrirExpedientes" prefHeight="13.0" prefWidth="1.0" style="-fx-background-color: #3b6f89;">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/exp.png" />
+                                 </image></ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#salir" prefHeight="38.0" prefWidth="31.0" style="-fx-background-color: #3b6f89;">
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/iexit.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children></Pane>
+   </left>
+</BorderPane>

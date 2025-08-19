@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="166.0" prefWidth="385.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Label prefHeight="64.0" prefWidth="328.0" text="¿Estas seguro de que deseas actualizar tus datos?" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Label>
+   </center>
+   <bottom>
+      <Pane prefHeight="47.0" prefWidth="385.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="45.0" prefWidth="385.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #787A7D;" text="Cancelar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="67.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #3B6F89;" text="Continuar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="46.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </bottom>
+</BorderPane>

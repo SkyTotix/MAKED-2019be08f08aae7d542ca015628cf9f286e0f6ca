@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.HistCitasController">
+   <top>
+             <AnchorPane prefHeight="107.0" prefWidth="1366.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/cross.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="100.0" layoutY="30.0" text="Sistema de Gestión de Citas Médicas" textFill="#3B6F89">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <VBox fx:id="menuLateral" prefHeight="661.0" prefWidth="60.0" minWidth="60.0" maxWidth="200.0" style="-fx-background-color: #3B6F89; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 2, 0);" BorderPane.alignment="CENTER">
+         <children>
+            <!-- Navigation menu -->
+            <VBox prefHeight="500.0" prefWidth="60.0" style="-fx-background-color: transparent;" spacing="10.0">
+               <children>
+                  <!-- Mi Perfil -->
+                  <VBox fx:id="menuItemMiPerfil" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnMiPerfilMenu" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirMiPerfil">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                                                <image>
+                                  <Image url="@img/profile.png" />
+                               </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Mi Perfil" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  
+                  <!-- Historial de Citas -->
+                  <VBox fx:id="menuItemHistorialCitas" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnHistorialCitas" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirHistorialCitas">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icon2.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Historial" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Editar Información -->
+                  <VBox fx:id="menuItemEditarInformacion" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnEditarInformacion" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirEditarInformacion">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icon3.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Editar" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Cancelar Cita -->
+                  <VBox fx:id="menuItemCancelarCita" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnCancelarCita" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirCancelarCita">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icon4.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Cancelar" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Reprogramar Cita -->
+                  <VBox fx:id="menuItemReprogramarCita" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnReprogramarCita" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirReprogramarCita">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/icon5.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Reprogramar" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </VBox>
+            
+            <!-- Spacer -->
+            <Region prefHeight="100.0" prefWidth="60.0" VBox.vgrow="ALWAYS" />
+            
+            <!-- Salir button -->
+            <VBox fx:id="menuItemSalir" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+               <children>
+                  <Button fx:id="btnSalir" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#salir">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/icon6.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label text="Salir" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="661.0" prefWidth="944.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <!-- Background with overlay -->
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="rgba(255,255,255,0.95)" height="621.0" layoutX="0.0" layoutY="0.0" stroke="transparent" strokeWidth="0.0" width="944.0" />
+            
+            <!-- Title -->
+            <Label layoutX="20.0" layoutY="20.0" text="Historial de Citas" textFill="#3B6F89">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            
+            <!-- Table -->
+            <TableView fx:id="tablaHistorialCitas" layoutX="20.0" layoutY="80.0" prefHeight="480.0" prefWidth="904.0" style="-fx-background-color: transparent;">
+               <columns>
+                  <TableColumn fx:id="colNumCita" prefWidth="80.0" text="No. de Cita" />
+                  <TableColumn fx:id="colFecha" prefWidth="100.0" text="Fecha" />
+                  <TableColumn fx:id="colMotivo" prefWidth="150.0" text="Motivo de Cita" />
+                  <TableColumn fx:id="colMedico" prefWidth="150.0" text="Médico" />
+                  <TableColumn fx:id="colDiagnostico" prefWidth="200.0" text="Diagnóstico" />
+                  <TableColumn fx:id="colTratamiento" prefWidth="200.0" text="Tratamiento" />
+                  <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+               </columns>
+            </TableView>
+            
+            <!-- Regresar button -->
+            <Button fx:id="btnRegresar" layoutX="742.0" layoutY="580.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #3B6F89; -fx-background-radius: 20; -fx-cursor: hand;" text="Regresar" textFill="WHITE" onAction="#regresar">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

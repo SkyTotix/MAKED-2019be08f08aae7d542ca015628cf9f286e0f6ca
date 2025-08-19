@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.SeleccionarCitaController">
+   <top>
+      <VBox style="-fx-background-color: #3B6F89;" spacing="10">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+         </padding>
+         <children>
+            <Label fx:id="lblTitulo" text="Seleccionar Cita" style="-fx-font-weight: bold; -fx-font-size: 20; -fx-text-fill: white;" />
+            <Label text="Seleccione la cita que desea modificar" style="-fx-font-size: 14; -fx-text-fill: #E7ECF0;" />
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox spacing="15" style="-fx-background-color: #FFFFFF;">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+         </padding>
+         <children>
+            <!-- Filtros -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+               <Label text="Filtrar por:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+               <DatePicker fx:id="datePicker" promptText="Seleccionar fecha" />
+               <ComboBox fx:id="cboMedico" promptText="Seleccionar médico" prefWidth="200" />
+               <ComboBox fx:id="cboPaciente" promptText="Seleccionar paciente" prefWidth="200" />
+               <Button text="Filtrar" style="-fx-background-color: #3B6F89; -fx-text-fill: white;" onAction="#filtrarCitas" />
+               <Button text="Limpiar" style="-fx-background-color: #787A7D; -fx-text-fill: white;" onAction="#limpiarFiltros" />
+            </HBox>
+            
+            <!-- Tabla de citas -->
+            <TableView fx:id="tablaCitas" VBox.vgrow="ALWAYS" style="-fx-background-color: #F5F5F5;">
+               <columns>
+                  <TableColumn fx:id="colFecha" text="Fecha" prefWidth="100" />
+                  <TableColumn fx:id="colHora" text="Hora" prefWidth="100" />
+                  <TableColumn fx:id="colPaciente" text="Paciente" prefWidth="150" />
+                  <TableColumn fx:id="colMedico" text="Médico" prefWidth="150" />
+                  <TableColumn fx:id="colMotivo" text="Motivo" prefWidth="200" />
+                  <TableColumn fx:id="colEstado" text="Estado" prefWidth="100" />
+               </columns>
+            </TableView>
+            
+            <!-- Información de la cita seleccionada -->
+            <VBox spacing="10" style="-fx-background-color: #E7ECF0; -fx-background-radius: 5;" visible="false" managed="false" fx:id="panelInfoCita">
+               <padding>
+                  <Insets top="15" right="15" bottom="15" left="15" />
+               </padding>
+               <children>
+                  <Label text="Información de la Cita Seleccionada:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                  <GridPane hgap="10" vgap="5">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="100" prefWidth="120" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="300" />
+                     </columnConstraints>
+                     <children>
+                        <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                        <Label fx:id="lblInfoFecha" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        
+                        <Label text="Hora:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                        <Label fx:id="lblInfoHora" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        
+                        <Label text="Paciente:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;" />
+                        <Label fx:id="lblInfoPaciente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        
+                        <Label text="Médico:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;" />
+                        <Label fx:id="lblInfoMedico" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        
+                        <Label text="Motivo:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;" />
+                        <Label fx:id="lblInfoMotivo" GridPane.columnIndex="1" GridPane.rowIndex="4" wrapText="true" />
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: #F5F5F5;">
+         <padding>
+            <Insets top="15" right="20" bottom="15" left="20" />
+         </padding>
+         <children>
+            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#cancelar" />
+            <Button fx:id="btnSeleccionar" text="Seleccionar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#seleccionarCita" defaultButton="true" disabled="true" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.ModificarExpedienteController">
+   <top>
+      <VBox style="-fx-background-color: #3B6F89;" spacing="10">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+         </padding>
+         <children>
+            <Label text="Modificar Expediente Médico" style="-fx-font-weight: bold; -fx-font-size: 20; -fx-text-fill: white;" />
+            <Label text="Modifique los campos del expediente según sea necesario" style="-fx-font-size: 14; -fx-text-fill: #E7ECF0;" />
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #FFFFFF;">
+         <VBox spacing="15" style="-fx-background-color: #FFFFFF;">
+            <padding>
+               <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+            <children>
+               <!-- Signos Vitales -->
+               <VBox spacing="10">
+                  <Label text="Signos Vitales" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #3B6F89;" />
+                  <GridPane hgap="15" vgap="10">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="150" prefWidth="150" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="120" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="150" prefWidth="150" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="120" />
+                     </columnConstraints>
+                     <children>
+                        <Label text="Frecuencia Cardíaca:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtFC" promptText="lpm" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        
+                        <Label text="Frecuencia Respiratoria:" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtFR" promptText="rpm" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        
+                        <Label text="Tensión Arterial:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtTA" promptText="mmHg" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        
+                        <Label text="Temperatura Corporal:" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                        <TextField fx:id="txtTC" promptText="°C" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </VBox>
+               
+               <!-- Diagnóstico -->
+               <VBox spacing="5">
+                  <Label text="Diagnóstico:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                  <TextArea fx:id="txtDiagnostico" promptText="Ingrese el diagnóstico del paciente" prefRowCount="3" style="-fx-font-size: 14;" />
+               </VBox>
+               
+               <!-- Tratamiento -->
+               <VBox spacing="5">
+                  <Label text="Tratamiento:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                  <TextArea fx:id="txtTratamiento" promptText="Ingrese el tratamiento prescrito" prefRowCount="3" style="-fx-font-size: 14;" />
+               </VBox>
+               
+               <!-- Observaciones -->
+               <VBox spacing="5">
+                  <Label text="Observaciones:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                  <TextArea fx:id="txtObservaciones" promptText="Ingrese observaciones adicionales" prefRowCount="3" style="-fx-font-size: 14;" />
+               </VBox>
+            </children>
+         </VBox>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: #F5F5F5;">
+         <padding>
+            <Insets top="15" right="20" bottom="15" left="20" />
+         </padding>
+         <children>
+            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#cancelar" />
+            <Button fx:id="btnGuardar" text="Guardar Cambios" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#guardarCambios" defaultButton="true" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.RegPacientesController">
+   <top>
+      <Pane prefHeight="107.0" prefWidth="1080.0" style="-fx-background-color: #E7ECF0;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="73.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/cross.png" />
+               </image></ImageView>
+            <Button layoutX="897.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/miPerfil.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnRegresar" layoutX="755.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #787A7D;" text="Regresar" textFill="WHITE" onAction="#regresar">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="14.0" layoutY="14.0" text="Registro Paciente">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnRegistrar" layoutX="630.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" style="-fx-background-color: #3B6F89;" text="Registrar" textFill="WHITE" onAction="#registrar">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="248.0" fitWidth="243.0" layoutX="14.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/profile.png" />
+               </image></ImageView>
+            <HBox layoutX="288.0" layoutY="105.0" prefHeight="200.0" prefWidth="577.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="276.0">
+                     <children>
+                        <Label text="Nombre">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtNombre" promptText="Ingrese nombre completo" style="-fx-background-color: #B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                        <Label text="CURP">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCurp" promptText="Ingrese el CURP" style="-fx-background-color: B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                        <Label text="Telefono">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></Label>
+                        <TextField fx:id="txtTelefono" promptText="Ingrese el teléfono" style="-fx-background-color: B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="278.0">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Matricula">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></Label>
+                        <TextField fx:id="txtMatricula" promptText="Ingresa tu matricula" style="-fx-background-color: B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                        <Label text="Correo Institucional">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCorreo" promptText="Ingrese el correo" style="-fx-background-color: B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                        <Label text="Contraseña">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtContrasena" promptText="Ingrese la contraseña" style="-fx-background-color: B9C3D5;">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin></TextField>
+                        <Label text="Confirmar Contraseña">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtConfirmarContrasena" promptText="Repita la contraseña" style="-fx-background-color: B9C3D5;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </center>
+   <left>
+      <Pane prefHeight="613.0" prefWidth="123.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="41.0" layoutY="173.0" prefHeight="267.0" prefWidth="32.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b6f89" height="273.0" layoutX="-4.0" layoutY="-2.0" stroke="#3b6f89" strokeLineCap="ROUND" strokeWidth="5.0" width="38.0" />
+                  <VBox layoutX="-3.0" layoutY="-5.0" prefHeight="274.0" prefWidth="40.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="18.0" style="-fx-background-color: #3B6F89;">
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/iper.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="36.0" style="-fx-background-color: #3B6F89;">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/imed.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="13.0" prefWidth="1.0" style="-fx-background-color: #3B6F89;">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/ical.png" />
+                                 </image></ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="31.0" style="-fx-background-color: #3B6F89;">
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GestorDCitasMedicas/src/main/resources/com/gestorcitasmedicas/img/iexit.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children></Pane>
+   </left>
+</BorderPane>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="1000" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.MainRecepcionistaController">
+   <top>
+      <HBox prefHeight="107.0" style="-fx-background-color: #E7ECF0;" alignment="CENTER_LEFT" spacing="20">
+         <padding>
+            <Insets top="10" right="20" bottom="10" left="20" />
+         </padding>
+         <children>
+            <ImageView fitHeight="87.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/cross.png" />
+               </image>
+            </ImageView>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnPerfil" mnemonicParsing="false" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" onAction="#abrirPerfil">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/miPerfil.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="True" fitToHeight="True" style="-fx-background-color: transparent;"/>
+         <VBox spacing="20" style="-fx-background-color: #FFFFFF;" alignment="TOP_CENTER">
+            <padding>
+               <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+            <children>
+               <!-- Panel de control con contadores -->
+               <VBox spacing="15" maxWidth="1200">
+                  <Label text="Panel de control" style="-fx-font-weight: bold; -fx-font-size: 20;" />
+                  
+                  <!-- Contadores -->
+                  <HBox spacing="20" alignment="CENTER">
+                     <!-- Consultas Programadas -->
+                     <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70" minWidth="250">
+                     <padding>
+                        <Insets top="10" right="15" bottom="10" left="15" />
+                     </padding>
+                     <children>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@img/cal.png" />
+                              </image>
+                           </ImageView>
+                           <VBox spacing="2">
+                              <Label text="Consultas programadas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                              <Label fx:id="consultasProgramadasLabel" text="15" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                           </VBox>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Consultas Concluidas -->
+                  <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70" minWidth="250">
+                     <padding>
+                        <Insets top="10" right="15" bottom="10" left="15" />
+                     </padding>
+                     <children>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@img/cal2.png" />
+                              </image>
+                           </ImageView>
+                           <VBox spacing="2">
+                              <Label text="Consultas concluidas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                              <Label fx:id="consultasConcluidasLabel" text="8" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                           </VBox>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Consultas Reprogramadas -->
+                  <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70" minWidth="250">
+                     <padding>
+                        <Insets top="10" right="15" bottom="10" left="15" />
+                     </padding>
+                     <children>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@img/cal.png" />
+                              </image>
+                           </ImageView>
+                           <VBox spacing="2">
+                              <Label text="Consultas reprogramadas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                              <Label fx:id="consultasReprogramadasLabel" text="3" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                           </VBox>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </HBox>
+            </VBox>
+            
+            <!-- Calendario -->
+            <HBox spacing="20" alignment="CENTER_LEFT" maxWidth="1200">
+               <Label text="Calendario:" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+               <DatePicker fx:id="calendario" promptText="Seleccionar fecha" />
+            </HBox>
+            
+            <!-- Área de consultas del día -->
+            <VBox spacing="10" maxWidth="1200">
+               <Label text="Consultas del día:" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+               <ScrollPane fitToWidth="true" prefViewportHeight="400" style="-fx-background-color: transparent;">
+                  <VBox fx:id="contenedorConsultas" spacing="10" />
+               </ScrollPane>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+       <left>
+       <VBox fx:id="menuLateral" style="-fx-background-color: #3B6F89;" prefWidth="60" minWidth="60" maxWidth="200" BorderPane.alignment="CENTER">
+          <padding>
+             <Insets top="15" right="8" bottom="15" left="8" />
+          </padding>
+          <children>
+             <!-- Gestion Usuarios -->
+             <VBox fx:id="menuItemUsuarios" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                <padding>
+                   <Insets top="8" right="8" bottom="8" left="8" />
+                </padding>
+                <children>
+                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                         <Image url="@img/iper.png" />
+                      </image>
+                   </ImageView>
+                   <Label text="Gestion Usuarios" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                </children>
+             </VBox>
+             
+             <!-- Gestion Medicos -->
+             <VBox fx:id="menuItemMedicos" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                <padding>
+                   <Insets top="8" right="8" bottom="8" left="8" />
+                </padding>
+                <children>
+                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                         <Image url="@img/imed.png" />
+                      </image>
+                   </ImageView>
+                   <Label text="Gestion Medicos" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                </children>
+             </VBox>
+             
+             <!-- Agendar Citas -->
+             <VBox fx:id="menuItemCitas" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                <padding>
+                   <Insets top="8" right="8" bottom="8" left="8" />
+                </padding>
+                <children>
+                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                         <Image url="@img/ical.png" />
+                      </image>
+                   </ImageView>
+                   <Label text="Agendar Citas" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                </children>
+             </VBox>
+             
+             <!-- Espaciador -->
+             <Region VBox.vgrow="ALWAYS" />
+             
+             <!-- Cerrar Sesión -->
+             <VBox fx:id="menuItemSalir" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                <padding>
+                   <Insets top="8" right="8" bottom="8" left="8" />
+                </padding>
+                <children>
+                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                         <Image url="@img/iexit.png" />
+                      </image>
+                   </ImageView>
+                   <Label text="Cerrar Sesión" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                </children>
+             </VBox>
+          </children>
+       </VBox>
+    </left>
+</BorderPane>

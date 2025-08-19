@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="20" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.PanelPrincipalController">
+   <padding>
+      <Insets top="20" right="20" bottom="20" left="20" />
+   </padding>
+   <children>
+      <!-- Panel de control con contadores -->
+      <VBox spacing="15">
+         <Label text="Panel de control" style="-fx-font-weight: bold; -fx-font-size: 20;" />
+         
+         <!-- Contadores -->
+         <HBox spacing="20">
+            <!-- Consultas Programadas -->
+            <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70">
+               <padding>
+                  <Insets top="10" right="15" bottom="10" left="15" />
+               </padding>
+               <children>
+                  <HBox spacing="10" alignment="CENTER_LEFT">
+                     <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/cal.png" />
+                        </image>
+                     </ImageView>
+                     <VBox spacing="2">
+                        <Label text="Consultas programadas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                        <Label fx:id="consultasProgramadasLabel" text="15" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                     </VBox>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <!-- Consultas Concluidas -->
+            <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70">
+               <padding>
+                  <Insets top="10" right="15" bottom="10" left="15" />
+               </padding>
+               <children>
+                  <HBox spacing="10" alignment="CENTER_LEFT">
+                     <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/cal2.png" />
+                        </image>
+                     </ImageView>
+                     <VBox spacing="2">
+                        <Label text="Consultas concluidas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                        <Label fx:id="consultasConcluidasLabel" text="8" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                     </VBox>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <!-- Consultas Reprogramadas -->
+            <VBox style="-fx-background-color: #7b9dbf; -fx-background-radius: 5;" prefWidth="280" prefHeight="70">
+               <padding>
+                  <Insets top="10" right="15" bottom="10" left="15" />
+               </padding>
+               <children>
+                  <HBox spacing="10" alignment="CENTER_LEFT">
+                     <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@img/cal.png" />
+                        </image>
+                     </ImageView>
+                     <VBox spacing="2">
+                        <Label text="Consultas reprogramadas" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
+                        <Label fx:id="consultasReprogramadasLabel" text="3" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+                     </VBox>
+                  </HBox>
+               </children>
+            </VBox>
+         </HBox>
+      </VBox>
+      
+      <!-- Calendario -->
+      <HBox spacing="20" alignment="CENTER_LEFT">
+         <Label text="Calendario:" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+         <DatePicker fx:id="calendario" promptText="Seleccionar fecha" />
+      </HBox>
+      
+      <!-- Área de consultas del día -->
+      <VBox spacing="10">
+         <Label text="Consultas del día:" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+         <ScrollPane fitToWidth="true" prefViewportHeight="400">
+            <VBox fx:id="contenedorConsultas" spacing="10" />
+         </ScrollPane>
+      </VBox>
+      
+      <!-- Botones de administración -->
+      <VBox spacing="15">
+         <Label text="Administración:" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+         <HBox spacing="20">
+            <Button text="Crear Médico" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#crearMedico" prefWidth="150" />
+            <Button text="Crear Paciente" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#crearPaciente" prefWidth="150" />
+         </HBox>
+      </VBox>
+   </children>
+</VBox>

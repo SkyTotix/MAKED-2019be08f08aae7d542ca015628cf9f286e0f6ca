@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.GestMedicosController">
+   <top>
+      <Pane prefHeight="107.0" prefWidth="1366.0" style="-fx-background-color: #E7ECF0;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="73.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/cross.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnPerfil" layoutX="1183.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" onAction="#abrirPerfil">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/miPerfil.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <VBox fx:id="menuLateral" style="-fx-background-color: #3B6F89;" prefWidth="60" minWidth="60" maxWidth="200" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="15" right="8" bottom="15" left="8" />
+         </padding>
+         <children>
+            <!-- Gestion Usuarios -->
+            <VBox fx:id="menuItemUsuarios" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+               <padding>
+                  <Insets top="8" right="8" bottom="8" left="8" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/iper.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Gestion Usuarios" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+               </children>
+            </VBox>
+            
+            <!-- Gestion Medicos -->
+            <VBox fx:id="menuItemMedicos" style="-fx-background-color: #4A7A9A; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+               <padding>
+                  <Insets top="8" right="8" bottom="8" left="8" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/imed.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Gestion Medicos" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+               </children>
+            </VBox>
+            
+            <!-- Gestion Citas -->
+            <VBox fx:id="menuItemCitas" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+               <padding>
+                  <Insets top="8" right="8" bottom="8" left="8" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/ical.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Gestion Citas" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+               </children>
+            </VBox>
+            
+            <!-- Salir -->
+            <VBox fx:id="menuItemSalir" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+               <padding>
+                  <Insets top="8" right="8" bottom="8" left="8" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/iexit.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Salir" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <VBox spacing="20" style="-fx-background-color: #FFFFFF;">
+            <padding>
+               <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+            <children>
+               <!-- Título -->
+               <HBox spacing="10" alignment="CENTER_LEFT">
+                  <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/imed.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Gestión de Médicos" style="-fx-font-weight: bold; -fx-font-size: 24; -fx-text-fill: #3B6F89;" />
+               </HBox>
+               
+               <!-- Tabla -->
+               <VBox spacing="10" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="tablaMedicos" VBox.vgrow="ALWAYS" style="-fx-background-color: #E7ECF0;">
+                     <columns>
+                        <TableColumn fx:id="colNombre" text="Nombre" prefWidth="180" />
+                        <TableColumn fx:id="colEspecialidad" text="Especialidad" prefWidth="130" />
+                        <TableColumn fx:id="colCedula" text="No. Cédula" prefWidth="130" />
+                        <TableColumn fx:id="colConsultorio" text="Consultorio" prefWidth="100" />
+                        <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="130" />
+                        <TableColumn fx:id="colEstatus" text="Estatus" prefWidth="100" />
+                        <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120" />
+                     </columns>
+                  </TableView>
+                  
+                  <!-- Botón Agregar -->
+                  <HBox alignment="CENTER_RIGHT">
+                     <Button fx:id="btnAgregar" text="Agregar" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#agregarMedico" />
+                  </HBox>
+               </VBox>
+               
+               <!-- Botón de regreso al final -->
+               <HBox alignment="CENTER_LEFT" spacing="10">
+                  <Button text="← Volver al Menú Principal" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#volverAlMenuPrincipal" />
+               </HBox>
+            </children>
+         </VBox>
+      </ScrollPane>
+   </center>
+</BorderPane>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.PerfilDocModController">
+   <top>
+      <Pane prefHeight="107.0" prefWidth="1024.0" style="-fx-background-color: #E7ECF0;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="101.0" fitWidth="73.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/cross.png" />
+               </image></ImageView>
+            <Button fx:id="btnVolverMenu" layoutX="841.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" onAction="#volverAlMenuPrincipal">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/miPerfil.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <ScrollPane vbarPolicy="AS_NEEDED" hbarPolicy="NEVER" fitToWidth="true" fitToHeight="true" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <content>
+                         <VBox prefHeight="750.0" prefWidth="800.0" spacing="10.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                                     <Pane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <Button fx:id="btnCancelar" layoutX="587.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #787A7D;" text="Cancelar" textFill="WHITE" onAction="#cancelarCambios">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnGuardar" layoutX="715.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" style="-fx-background-color: #3B6F89;" text="Guardar" textFill="WHITE" onAction="#guardarCambios">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnRegresarMenu" layoutX="843.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" style="-fx-background-color: #4CAF50;" text="Regresar al Menú" textFill="WHITE" onAction="#regresarAlMenuPrincipal">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+            <ImageView fitHeight="200.0" fitWidth="850.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/docBack.png" />
+               </image></ImageView>
+            <ImageView fitHeight="193.0" fitWidth="179.0" layoutX="14.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/profile.png" />
+               </image></ImageView>
+            <HBox layoutX="55.0" layoutY="315.0" prefHeight="200.0" prefWidth="778.0">
+               <children>
+                  <VBox prefHeight="201.0" prefWidth="172.0">
+                     <children>
+                        <Label text="Cedula profesional:" textFill="#95b3cc">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="55.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblCedula" prefHeight="25.0" prefWidth="236.0" text="cedula aqui">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Edad:" textFill="#95b3cc">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin></Label>
+                        <TextField fx:id="txtEdad" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: #B9C3D5;">
+                           <VBox.margin>
+                              <Insets right="120.0" />
+                           </VBox.margin></TextField>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="190.0">
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Sexo:" textFill="#95b3cc">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="55.0" />
+                           </VBox.margin></Label>
+                        <TextField fx:id="txtSexo" prefHeight="25.0" prefWidth="8.0" style="-fx-background-color: #B9C3D5;">
+                           <VBox.margin>
+                              <Insets right="70.0" />
+                           </VBox.margin></TextField>
+                        <Label text="Correo Electronico" textFill="#95b3cc">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtCorreo" style="-fx-background-color: #B9C3D5;" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="180.0">
+                     <children>
+                        <Label text="CURP:" textFill="#95b3cc">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="55.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblCurp" prefHeight="25.0" prefWidth="152.0" text="curp">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="Horario" textFill="#95b3cc">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></Label>
+                        <TextField fx:id="txtHorario" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #B9C3D5;">
+                           <VBox.margin>
+                              <Insets right="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="204.0">
+                     <children>
+                        <Label text="Telefono:" textFill="#95b3cc">
+                           <VBox.margin>
+                              <Insets top="55.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtTelefono" style="-fx-background-color: #B9C3D5;">
+                           <VBox.margin>
+                              <Insets right="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label text="Consultorio:" textFill="#95b3cc">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtConsultorio" style="-fx-background-color: #B9C3D5;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label fx:id="lblNombre" layoutX="213.0" layoutY="220.0" prefHeight="27.0" prefWidth="319.0" text="nombre">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+                        </children>
+                     </Pane>
+                  </children>
+               </VBox>
+            </content>
+         </ScrollPane>
+      </center>
+   <left>
+      <Pane prefHeight="613.0" prefWidth="123.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="41.0" layoutY="173.0" prefHeight="267.0" prefWidth="32.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b6f89" height="236.0" layoutX="-6.0" layoutY="-4.0" stroke="#3b6f89" strokeLineCap="ROUND" strokeWidth="5.0" width="43.0" />
+                  <VBox layoutX="-3.0" layoutY="-5.0" prefHeight="231.0" prefWidth="40.0">
+                     <children>
+                        <Button fx:id="btnCitas" mnemonicParsing="false" prefHeight="34.0" prefWidth="18.0" style="-fx-background-color: #3B6F89;" onAction="#abrirCitas">
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/ical.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnExpedientes" mnemonicParsing="false" prefHeight="34.0" prefWidth="36.0" style="-fx-background-color: #3B6F89;" onAction="#abrirExpedientes">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/exp.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnSalir" mnemonicParsing="false" prefHeight="34.0" prefWidth="31.0" style="-fx-background-color: #3B6F89;" onAction="#salir">
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/iexit.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children></Pane>
+   </left>
+</BorderPane>
