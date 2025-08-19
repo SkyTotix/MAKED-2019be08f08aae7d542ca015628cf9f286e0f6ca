@@ -253,26 +253,28 @@ public class VistaPacienteController {
     @FXML
     private void abrirCancelarCita(ActionEvent event) {
         try {
-            System.out.println("Abriendo cancelar cita...");
+            System.out.println("Abriendo selección de cita para cancelar...");
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/CancelarCita.fxml"));
-            Parent cancelarRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
+            Parent seleccionarRoot = loader.load();
             
-            // Obtener el controlador y configurar el ID del paciente
-            CancelarCitaController controller = loader.getController();
+            // Obtener el controlador y configurarlo para "cancelar"
+            SeleccionarCitaController controller = loader.getController();
+            controller.setAccion("cancelar");
             controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            controller.setVentanaActual((Stage) btnCancelarCita.getScene().getWindow());
             
-            Scene nuevaEscena = new Scene(cancelarRoot);
+            Scene nuevaEscena = new Scene(seleccionarRoot);
             Stage currentStage = (Stage) btnCancelarCita.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Cancelar Cita - Paciente");
+            currentStage.setTitle("Seleccionar Cita para Cancelar");
             currentStage.setMaximized(true);
             currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar la cancelación de cita", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudo cargar la selección de citas", Alert.AlertType.ERROR);
         }
     }
     
@@ -281,26 +283,28 @@ public class VistaPacienteController {
     @FXML
     private void abrirReprogramarCita(ActionEvent event) {
         try {
-            System.out.println("Abriendo reprogramar cita...");
+            System.out.println("Abriendo selección de cita para reprogramar...");
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/ReprogramarCita.fxml"));
-            Parent reprogramarRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
+            Parent seleccionarRoot = loader.load();
             
-            // Obtener el controlador y configurar el ID del paciente
-            ReprogramarCitaController controller = loader.getController();
+            // Obtener el controlador y configurarlo para "reprogramar"
+            SeleccionarCitaController controller = loader.getController();
+            controller.setAccion("reprogramar");
             controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            controller.setVentanaActual((Stage) btnReprogramarCita.getScene().getWindow());
             
-            Scene nuevaEscena = new Scene(reprogramarRoot);
+            Scene nuevaEscena = new Scene(seleccionarRoot);
             Stage currentStage = (Stage) btnReprogramarCita.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Reprogramar Cita - Paciente");
+            currentStage.setTitle("Seleccionar Cita para Reprogramar");
             currentStage.setMaximized(true);
             currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar la reprogramación de cita", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudo cargar la selección de citas", Alert.AlertType.ERROR);
         }
     }
     

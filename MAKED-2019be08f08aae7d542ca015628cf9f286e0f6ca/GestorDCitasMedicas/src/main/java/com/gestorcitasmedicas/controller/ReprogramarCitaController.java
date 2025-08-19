@@ -17,7 +17,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import com.gestorcitasmedicas.model.Consulta;
 
 public class ReprogramarCitaController {
 
@@ -26,6 +28,13 @@ public class ReprogramarCitaController {
     @FXML private TextArea txtMotivo;
     @FXML private Button btnCancelar;
     @FXML private Button btnAceptar;
+    
+    // Elementos del panel de información de la cita
+    @FXML private VBox panelInfoCita;
+    @FXML private Label lblInfoFecha;
+    @FXML private Label lblInfoHora;
+    @FXML private Label lblInfoMedico;
+    @FXML private Label lblInfoMotivo;
     
     // Elementos del menú expandible
     @FXML private VBox menuLateral;
@@ -48,13 +57,23 @@ public class ReprogramarCitaController {
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
     private int pacienteId = 1; // ID del paciente logueado (por defecto 1)
+    private Consulta citaSeleccionada; // Cita seleccionada para reprogramar
     
     public void setPacienteId(int pacienteId) {
         this.pacienteId = pacienteId;
         System.out.println("ReprogramarCitaController - Paciente ID establecido: " + this.pacienteId);
         
-        // Abrir la ventana de selección de cita después de establecer el pacienteId
-        abrirSeleccionarCita();
+        // No abrir automáticamente la ventana de selección aquí
+        // Se abrirá cuando el usuario haga clic en el botón correspondiente
+    }
+    
+    public void setCitaSeleccionada(Consulta cita) {
+        this.citaSeleccionada = cita;
+        System.out.println("ReprogramarCitaController - Cita seleccionada: ID=" + cita.getId() + 
+                         ", Fecha=" + cita.getFecha() + ", Hora=" + cita.getHora());
+        
+        // Mostrar información de la cita seleccionada
+        mostrarInformacionCita();
     }
 
     @FXML
@@ -91,14 +110,14 @@ public class ReprogramarCitaController {
             controller.setPacienteId(pacienteId);
             System.out.println("ReprogramarCitaController - PacienteId establecido en el controlador: " + pacienteId);
             
+            // Configurar el controlador para que use esta ventana actual
+            controller.setVentanaActual((Stage) btnAceptar.getScene().getWindow());
+            
             Stage stage = new Stage();
             stage.setTitle("Seleccionar Cita para Reprogramar");
             stage.setScene(new Scene(seleccionarRoot));
             stage.setResizable(false);
             stage.showAndWait();
-            
-            // Si se seleccionó una cita, continuar con la reprogramación
-            // TODO: Implementar lógica para obtener la cita seleccionada
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,6 +147,32 @@ public class ReprogramarCitaController {
         }
         
         cmbFecha.setItems(fechas);
+    }
+    
+    private void mostrarInformacionCita() {
+        if (citaSeleccionada != null) {
+            System.out.println("ReprogramarCitaController - Mostrando información de la cita seleccionada");
+            
+            // Obtener información del médico
+            com.gestorcitasmedicas.model.Medico medico = com.gestorcitasmedicas.model.Medico.obtenerTodos().stream()
+                .filter(m -> m.getId() == citaSeleccionada.getIdMedico())
+                .findFirst()
+                .orElse(null);
+            
+            // Mostrar información en el panel
+            lblInfoFecha.setText(citaSeleccionada.getFecha().toString());
+            lblInfoHora.setText(citaSeleccionada.getHora().toString());
+            lblInfoMedico.setText(medico != null ? medico.getNombre() + " - " + medico.getEspecialidad() : "Médico " + citaSeleccionada.getIdMedico());
+            lblInfoMotivo.setText(citaSeleccionada.getMotivo());
+            
+            // Mostrar el panel de información
+            panelInfoCita.setVisible(true);
+            panelInfoCita.setManaged(true);
+            
+            // Actualizar el prompt del área de texto
+            txtMotivo.setPromptText("Motivo de reprogramación para cita del " + citaSeleccionada.getFecha() + 
+                                   " a las " + citaSeleccionada.getHora());
+        }
     }
     
     private void configurarEfectosHover() {
@@ -170,8 +215,33 @@ public class ReprogramarCitaController {
     private void aceptar(ActionEvent event) {
         System.out.println("Aceptando reprogramación de cita...");
         
+        // Validar que se haya seleccionado una cita
+        if (citaSeleccionada == null) {
+            mostrarAlerta("Error", "Debe seleccionar una cita para reprogramar", Alert.AlertType.ERROR);
+            return;
+        }
+        
         // Validar campos
         if (!validarCampos()) {
+            return;
+        }
+        
+        // Convertir fecha y hora seleccionadas
+        final LocalDate nuevaFecha;
+        final LocalTime nuevaHora;
+        
+        try {
+            // Convertir fecha del formato dd/MM/yyyy
+            String fechaStr = cmbFecha.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            nuevaFecha = LocalDate.parse(fechaStr, formatter);
+            
+            // Convertir hora del formato HH:mm
+            String horaStr = cmbHora.getValue();
+            nuevaHora = LocalTime.parse(horaStr);
+            
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al procesar fecha u hora seleccionada", Alert.AlertType.ERROR);
             return;
         }
         
@@ -181,22 +251,35 @@ public class ReprogramarCitaController {
         confirmacion.setHeaderText(null);
         confirmacion.setContentText(
             "¿Está seguro de que desea reprogramar su cita?\n\n" +
-            "Nueva fecha: " + cmbFecha.getValue() + "\n" +
-            "Nueva hora: " + cmbHora.getValue() + "\n" +
+            "Cita actual: " + citaSeleccionada.getFecha() + " a las " + citaSeleccionada.getHora() + "\n" +
+            "Nueva fecha: " + nuevaFecha + "\n" +
+            "Nueva hora: " + nuevaHora + "\n" +
             "Motivo: " + txtMotivo.getText()
         );
         
         confirmacion.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                // Simular reprogramación exitosa
+                // Reprogramar la cita
                 try {
-                    System.out.println("Cita reprogramada exitosamente");
-                    System.out.println("Nueva fecha: " + cmbFecha.getValue());
-                    System.out.println("Nueva hora: " + cmbHora.getValue());
-                    System.out.println("Motivo: " + txtMotivo.getText());
+                    boolean reprogramacionExitosa = Consulta.reprogramarCita(
+                        citaSeleccionada.getId(), 
+                        nuevaFecha, 
+                        nuevaHora, 
+                        txtMotivo.getText()
+                    );
                     
-                    // Mostrar ventana de confirmación exitosa
-                    mostrarConfirmacionExitosa();
+                    if (reprogramacionExitosa) {
+                        System.out.println("Cita reprogramada exitosamente");
+                        System.out.println("ID: " + citaSeleccionada.getId());
+                        System.out.println("Nueva fecha: " + nuevaFecha);
+                        System.out.println("Nueva hora: " + nuevaHora);
+                        System.out.println("Motivo: " + txtMotivo.getText());
+                        
+                        // Mostrar ventana de confirmación exitosa
+                        mostrarConfirmacionExitosa();
+                    } else {
+                        mostrarAlerta("Error", "No se pudo reprogramar la cita. Verifique la disponibilidad del médico.", Alert.AlertType.ERROR);
+                    }
                     
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -266,18 +349,79 @@ public class ReprogramarCitaController {
     
     private void regresarAlPanelPrincipal() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
-            Parent pacienteRoot = loader.load();
+            System.out.println("ReprogramarCitaController - Regresando al panel principal del paciente");
             
-            Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
-            Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
-            currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Panel Principal - Paciente");
-            currentStage.centerOnScreen();
+            // Intentar obtener la ventana actual de múltiples formas
+            Stage currentStage = null;
+            
+            // Método 1: Desde cualquier nodo de la escena
+            if (btnCancelar != null && btnCancelar.getScene() != null) {
+                currentStage = (Stage) btnCancelar.getScene().getWindow();
+                System.out.println("ReprogramarCitaController - Ventana obtenida desde btnCancelar");
+            } else if (btnAceptar != null && btnAceptar.getScene() != null) {
+                currentStage = (Stage) btnAceptar.getScene().getWindow();
+                System.out.println("ReprogramarCitaController - Ventana obtenida desde btnAceptar");
+            } else if (txtMotivo != null && txtMotivo.getScene() != null) {
+                currentStage = (Stage) txtMotivo.getScene().getWindow();
+                System.out.println("ReprogramarCitaController - Ventana obtenida desde txtMotivo");
+            } else if (cmbHora != null && cmbHora.getScene() != null) {
+                currentStage = (Stage) cmbHora.getScene().getWindow();
+                System.out.println("ReprogramarCitaController - Ventana obtenida desde cmbHora");
+            } else if (cmbFecha != null && cmbFecha.getScene() != null) {
+                currentStage = (Stage) cmbFecha.getScene().getWindow();
+                System.out.println("ReprogramarCitaController - Ventana obtenida desde cmbFecha");
+            } else {
+                // Método 2: Buscar cualquier nodo en la escena de manera más segura
+                try {
+                    if (btnCancelar != null && btnCancelar.getScene() != null && btnCancelar.getScene().getRoot() != null) {
+                        for (javafx.scene.Node node : btnCancelar.getScene().getRoot().lookupAll("*")) {
+                            if (node.getScene() != null) {
+                                currentStage = (Stage) node.getScene().getWindow();
+                                System.out.println("ReprogramarCitaController - Ventana obtenida desde nodo: " + node.getClass().getSimpleName());
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("ReprogramarCitaController - Error en búsqueda de nodos: " + e.getMessage());
+                }
+            }
+            
+            if (currentStage != null) {
+                System.out.println("ReprogramarCitaController - Ventana encontrada, cargando VistaPaciente.fxml");
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
+                Parent pacienteRoot = loader.load();
+                
+                Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
+                currentStage.setScene(nuevaEscena);
+                currentStage.setTitle("Panel Principal - Paciente");
+                currentStage.centerOnScreen();
+                currentStage.show(); // Asegurar que la ventana se muestre
+                System.out.println("ReprogramarCitaController - Navegación exitosa al panel principal");
+            } else {
+                System.out.println("ReprogramarCitaController - Error: No se pudo obtener la ventana actual");
+                // Crear una nueva ventana como último recurso
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
+                Parent pacienteRoot = loader.load();
+                
+                Stage newStage = new Stage();
+                Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
+                newStage.setScene(nuevaEscena);
+                newStage.setTitle("Panel Principal - Paciente");
+                newStage.centerOnScreen();
+                newStage.show();
+                System.out.println("ReprogramarCitaController - Nueva ventana creada como respaldo");
+            }
             
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo regresar al panel principal", Alert.AlertType.ERROR);
+            System.out.println("ReprogramarCitaController - Error al cargar VistaPaciente.fxml: " + e.getMessage());
+            mostrarAlerta("Error", "No se pudo regresar al panel principal: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ReprogramarCitaController - Error inesperado: " + e.getMessage());
+            mostrarAlerta("Error", "Error inesperado al regresar al panel principal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     

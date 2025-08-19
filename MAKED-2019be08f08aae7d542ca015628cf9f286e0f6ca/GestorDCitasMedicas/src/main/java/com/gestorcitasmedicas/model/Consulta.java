@@ -127,6 +127,54 @@ public class Consulta {
                 .orElse(false);
     }
 
+    // Método para reprogramar una cita
+    public static boolean reprogramarCita(int idConsulta, LocalDate nuevaFecha, LocalTime nuevaHora, String motivoReprogramacion) {
+        return consultas.stream()
+                .filter(c -> c.getId() == idConsulta)
+                .findFirst()
+                .map(c -> {
+                    // Verificar disponibilidad del médico en la nueva fecha y hora
+                    if (!verificarDisponibilidad(c.getIdMedico(), nuevaFecha, nuevaHora)) {
+                        return false;
+                    }
+                    
+                    // Actualizar fecha y hora de la cita
+                    c.setFecha(nuevaFecha);
+                    c.setHora(nuevaHora);
+                    c.setMotivo(c.getMotivo() + " [REPROGRAMADA: " + motivoReprogramacion + "]");
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    // Método para cancelar cita manteniendo el historial
+    public static boolean cancelarCita(int idConsulta, String motivoCancelacion) {
+        return consultas.stream()
+                .filter(c -> c.getId() == idConsulta)
+                .findFirst()
+                .map(c -> {
+                    c.setEstado("cancelada");
+                    // Agregar el motivo de cancelación al historial sin borrar la cita
+                    c.setMotivo(c.getMotivo() + " [CANCELADA: " + motivoCancelacion + "]");
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    // Método para obtener consultas por paciente incluyendo canceladas (para historial)
+    public static List<Consulta> obtenerHistorialPorPaciente(int idPaciente) {
+        return consultas.stream()
+                .filter(c -> c.getIdPaciente() == idPaciente)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    // Método para obtener consultas activas por paciente (no canceladas)
+    public static List<Consulta> obtenerActivasPorPaciente(int idPaciente) {
+        return consultas.stream()
+                .filter(c -> c.getIdPaciente() == idPaciente && !c.getEstado().equals("cancelada"))
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
     // Método para agregar diagnóstico y tratamiento
     public static boolean agregarDiagnostico(int idConsulta, String diagnostico, String tratamiento, String observaciones) {
         return consultas.stream()

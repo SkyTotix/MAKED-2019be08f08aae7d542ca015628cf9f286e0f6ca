@@ -22,6 +22,13 @@ public class CancelarCitaController {
     @FXML private Button btnCancelar;
     @FXML private Button btnContinuar;
     
+    // Elementos del panel de información de la cita
+    @FXML private VBox panelInfoCita;
+    @FXML private Label lblInfoFecha;
+    @FXML private Label lblInfoHora;
+    @FXML private Label lblInfoMedico;
+    @FXML private Label lblInfoMotivo;
+    
     // Elementos del menú expandible
     @FXML private VBox menuLateral;
     @FXML private VBox menuItemMiPerfil;
@@ -49,8 +56,8 @@ public class CancelarCitaController {
         this.pacienteId = pacienteId;
         System.out.println("CancelarCitaController - Paciente ID establecido: " + this.pacienteId);
         
-        // Abrir la ventana de selección de cita después de establecer el pacienteId
-        abrirSeleccionarCita();
+        // No abrir automáticamente la ventana de selección aquí
+        // Se abrirá cuando el usuario haga clic en el botón correspondiente
     }
     
     public void setCitaSeleccionada(Consulta cita) {
@@ -92,14 +99,14 @@ public class CancelarCitaController {
             controller.setPacienteId(pacienteId);
             System.out.println("CancelarCitaController - PacienteId establecido en el controlador: " + pacienteId);
             
+            // Configurar el controlador para que use esta ventana actual
+            controller.setVentanaActual((Stage) btnCancelar.getScene().getWindow());
+            
             Stage stage = new Stage();
             stage.setTitle("Seleccionar Cita para Cancelar");
             stage.setScene(new Scene(seleccionarRoot));
             stage.setResizable(false);
             stage.showAndWait();
-            
-            // Si se seleccionó una cita, continuar con la cancelación
-            // TODO: Implementar lógica para obtener la cita seleccionada
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,8 +153,24 @@ public class CancelarCitaController {
     private void mostrarInformacionCita() {
         if (citaSeleccionada != null) {
             System.out.println("CancelarCitaController - Mostrando información de la cita seleccionada");
-            // Aquí podrías mostrar la información de la cita en la interfaz
-            // Por ejemplo, en un Label o en el área de texto del motivo
+            
+            // Obtener información del médico
+            com.gestorcitasmedicas.model.Medico medico = com.gestorcitasmedicas.model.Medico.obtenerTodos().stream()
+                .filter(m -> m.getId() == citaSeleccionada.getIdMedico())
+                .findFirst()
+                .orElse(null);
+            
+            // Mostrar información en el panel
+            lblInfoFecha.setText(citaSeleccionada.getFecha().toString());
+            lblInfoHora.setText(citaSeleccionada.getHora().toString());
+            lblInfoMedico.setText(medico != null ? medico.getNombre() + " - " + medico.getEspecialidad() : "Médico " + citaSeleccionada.getIdMedico());
+            lblInfoMotivo.setText(citaSeleccionada.getMotivo());
+            
+            // Mostrar el panel de información
+            panelInfoCita.setVisible(true);
+            panelInfoCita.setManaged(true);
+            
+            // Actualizar el prompt del área de texto
             txtMotivo.setPromptText("Motivo de cancelación para cita del " + citaSeleccionada.getFecha() + 
                                    " a las " + citaSeleccionada.getHora());
         }
@@ -176,13 +199,14 @@ public class CancelarCitaController {
         
         confirmacion.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                // Cancelar la cita en memoria
+                // Cancelar la cita en memoria manteniendo el historial
                 try {
-                    boolean cancelacionExitosa = Consulta.actualizarEstado(citaSeleccionada.getId(), "cancelada");
+                    boolean cancelacionExitosa = Consulta.cancelarCita(citaSeleccionada.getId(), txtMotivo.getText());
                     
                     if (cancelacionExitosa) {
                         System.out.println("Cita cancelada exitosamente en memoria: ID=" + citaSeleccionada.getId());
                         System.out.println("Motivo: " + txtMotivo.getText());
+                        System.out.println("La cita se mantiene en el historial del paciente");
                         
                         // Mostrar ventana de confirmación exitosa
                         mostrarConfirmacionExitosa();
@@ -243,18 +267,73 @@ public class CancelarCitaController {
     
     private void regresarAlPanelPrincipal() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
-            Parent pacienteRoot = loader.load();
+            System.out.println("CancelarCitaController - Regresando al panel principal del paciente");
             
-            Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
-            Stage currentStage = (Stage) btnCancelar.getScene().getWindow();
-            currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Panel Principal - Paciente");
-            currentStage.centerOnScreen();
+            // Intentar obtener la ventana actual de múltiples formas
+            Stage currentStage = null;
+            
+            // Método 1: Desde cualquier nodo de la escena
+            if (btnCancelar != null && btnCancelar.getScene() != null) {
+                currentStage = (Stage) btnCancelar.getScene().getWindow();
+                System.out.println("CancelarCitaController - Ventana obtenida desde btnCancelar");
+            } else if (btnContinuar != null && btnContinuar.getScene() != null) {
+                currentStage = (Stage) btnContinuar.getScene().getWindow();
+                System.out.println("CancelarCitaController - Ventana obtenida desde btnContinuar");
+            } else if (txtMotivo != null && txtMotivo.getScene() != null) {
+                currentStage = (Stage) txtMotivo.getScene().getWindow();
+                System.out.println("CancelarCitaController - Ventana obtenida desde txtMotivo");
+            } else {
+                // Método 2: Buscar cualquier nodo en la escena de manera más segura
+                try {
+                    if (btnCancelar != null && btnCancelar.getScene() != null && btnCancelar.getScene().getRoot() != null) {
+                        for (javafx.scene.Node node : btnCancelar.getScene().getRoot().lookupAll("*")) {
+                            if (node.getScene() != null) {
+                                currentStage = (Stage) node.getScene().getWindow();
+                                System.out.println("CancelarCitaController - Ventana obtenida desde nodo: " + node.getClass().getSimpleName());
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("CancelarCitaController - Error en búsqueda de nodos: " + e.getMessage());
+                }
+            }
+            
+            if (currentStage != null) {
+                System.out.println("CancelarCitaController - Ventana encontrada, cargando VistaPaciente.fxml");
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
+                Parent pacienteRoot = loader.load();
+                
+                Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
+                currentStage.setScene(nuevaEscena);
+                currentStage.setTitle("Panel Principal - Paciente");
+                currentStage.centerOnScreen();
+                currentStage.show(); // Asegurar que la ventana se muestre
+                System.out.println("CancelarCitaController - Navegación exitosa al panel principal");
+            } else {
+                System.out.println("CancelarCitaController - Error: No se pudo obtener la ventana actual");
+                // Crear una nueva ventana como último recurso
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
+                Parent pacienteRoot = loader.load();
+                
+                Stage newStage = new Stage();
+                Scene nuevaEscena = new Scene(pacienteRoot, 1024, 768);
+                newStage.setScene(nuevaEscena);
+                newStage.setTitle("Panel Principal - Paciente");
+                newStage.centerOnScreen();
+                newStage.show();
+                System.out.println("CancelarCitaController - Nueva ventana creada como respaldo");
+            }
             
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo regresar al panel principal", Alert.AlertType.ERROR);
+            System.out.println("CancelarCitaController - Error al cargar VistaPaciente.fxml: " + e.getMessage());
+            mostrarAlerta("Error", "No se pudo regresar al panel principal: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("CancelarCitaController - Error inesperado: " + e.getMessage());
+            mostrarAlerta("Error", "Error inesperado al regresar al panel principal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     

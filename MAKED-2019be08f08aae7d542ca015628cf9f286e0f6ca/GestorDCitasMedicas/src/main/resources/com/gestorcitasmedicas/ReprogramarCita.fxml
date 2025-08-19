@@ -36,6 +36,35 @@
             <VBox spacing="20" alignment="CENTER" maxWidth="600">
                <Label text="Reprogramación de Cita" style="-fx-font-weight: bold; -fx-font-size: 28; -fx-text-fill: #3B6F89;" />
                
+               <!-- Panel de información de la cita actual -->
+               <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #E7ECF0; -fx-background-radius: 5;" visible="false" managed="false" fx:id="panelInfoCita">
+                  <padding>
+                     <Insets top="15" right="15" bottom="15" left="15" />
+                  </padding>
+                  <children>
+                     <Label text="Información de la Cita Actual:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                     <GridPane hgap="10" vgap="5">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="NEVER" minWidth="100" prefWidth="120" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="300" />
+                        </columnConstraints>
+                        <children>
+                           <Label text="Fecha Actual:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+                           <Label fx:id="lblInfoFecha" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-text-fill: #3B6F89;" />
+                           
+                           <Label text="Hora Actual:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+                           <Label fx:id="lblInfoHora" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-text-fill: #3B6F89;" />
+                           
+                           <Label text="Médico:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+                           <Label fx:id="lblInfoMedico" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-text-fill: #3B6F89;" />
+                           
+                           <Label text="Motivo:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+                           <Label fx:id="lblInfoMotivo" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-text-fill: #3B6F89;" wrapText="true" />
+                        </children>
+                     </GridPane>
+                  </children>
+               </VBox>
+               
                <VBox spacing="10" alignment="CENTER_LEFT">
                   <Label text="Selecciona Hora:" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #3B6F89;" />
                   <ComboBox fx:id="cmbHora" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #3B6F89; -fx-border-radius: 5; -fx-font-size: 14;" promptText="Seleccione una hora" />
