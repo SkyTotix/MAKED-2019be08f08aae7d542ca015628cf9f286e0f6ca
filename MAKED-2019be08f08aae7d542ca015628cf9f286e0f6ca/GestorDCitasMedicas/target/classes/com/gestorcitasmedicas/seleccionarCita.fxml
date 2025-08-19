@@ -28,7 +28,6 @@
                <Label text="Filtrar por:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
                <DatePicker fx:id="datePicker" promptText="Seleccionar fecha" />
                <ComboBox fx:id="cboMedico" promptText="Seleccionar médico" prefWidth="200" />
-               <ComboBox fx:id="cboPaciente" promptText="Seleccionar paciente" prefWidth="200" />
                <Button text="Filtrar" style="-fx-background-color: #3B6F89; -fx-text-fill: white;" onAction="#filtrarCitas" />
                <Button text="Limpiar" style="-fx-background-color: #787A7D; -fx-text-fill: white;" onAction="#limpiarFiltros" />
             </HBox>
@@ -86,7 +85,7 @@
          </padding>
          <children>
             <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#cancelar" />
-            <Button fx:id="btnSeleccionar" text="Seleccionar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#seleccionarCita" defaultButton="true" disabled="true" />
+            <Button fx:id="btnSeleccionar" text="Seleccionar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#seleccionarCita" defaultButton="true" disable="true" />
          </children>
       </HBox>
    </bottom>

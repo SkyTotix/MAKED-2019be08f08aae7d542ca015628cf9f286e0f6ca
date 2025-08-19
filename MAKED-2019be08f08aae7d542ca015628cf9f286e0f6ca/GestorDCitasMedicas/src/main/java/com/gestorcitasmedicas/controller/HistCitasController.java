@@ -19,6 +19,10 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import com.gestorcitasmedicas.model.Consulta;
+import com.gestorcitasmedicas.model.Medico;
+import com.gestorcitasmedicas.model.Paciente;
+import java.util.List;
 
 public class HistCitasController {
 
@@ -98,19 +102,51 @@ public class HistCitasController {
     private void cargarHistorialCitas() {
         historialCitas = FXCollections.observableArrayList();
         
-        // Agregar datos de ejemplo
-        historialCitas.add(new Cita("001", "15/01/2024", "Dolor de cabeza", "Dr. Carlos Mendoza", 
-                                   "Migraña tensional", "Paracetamol 500mg cada 8 horas", "Completada"));
-        historialCitas.add(new Cita("002", "22/01/2024", "Revisión general", "Dr. Ana García", 
-                                   "Saludable", "Mantener dieta balanceada", "Completada"));
-        historialCitas.add(new Cita("003", "05/02/2024", "Dolor de espalda", "Dr. Roberto Silva", 
-                                   "Contractura muscular", "Ejercicios de estiramiento", "Completada"));
-        historialCitas.add(new Cita("004", "18/02/2024", "Control de presión", "Dr. María López", 
-                                   "Presión arterial normal", "Continuar medicación", "Completada"));
-        historialCitas.add(new Cita("005", "10/03/2024", "Consulta dental", "Dr. Juan Pérez", 
-                                   "Caries leve", "Empaste dental", "Completada"));
+        // Obtener todas las consultas de la memoria
+        List<Consulta> consultas = Consulta.obtenerTodas();
+        
+        // Filtrar solo las consultas del paciente actual (ID = 1 por ahora)
+        int pacienteId = 1; // TODO: Obtener ID real del paciente logueado
+        List<Consulta> consultasPaciente = Consulta.obtenerPorPaciente(pacienteId);
+        
+        System.out.println("Cargando historial de citas para paciente ID: " + pacienteId);
+        System.out.println("Total de consultas encontradas: " + consultasPaciente.size());
+        
+        // Convertir consultas a objetos Cita para la tabla
+        for (Consulta consulta : consultasPaciente) {
+            // Obtener información del médico
+            String nombreMedico = "Dr. Sin asignar";
+            Medico medico = Medico.obtenerTodos().stream()
+                .filter(m -> m.getId() == consulta.getIdMedico())
+                .findFirst()
+                .orElse(null);
+            if (medico != null) {
+                nombreMedico = medico.getNombre();
+            }
+            
+            // Formatear fecha
+            String fechaFormateada = consulta.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            
+            // Crear objeto Cita para la tabla
+            Cita cita = new Cita(
+                String.valueOf(consulta.getId()),
+                fechaFormateada,
+                consulta.getMotivo(),
+                nombreMedico,
+                consulta.getDiagnostico() != null ? consulta.getDiagnostico() : "Sin diagnóstico",
+                consulta.getTratamiento() != null ? consulta.getTratamiento() : "Sin tratamiento",
+                consulta.getEstado()
+            );
+            
+            historialCitas.add(cita);
+            System.out.println("Cita agregada al historial: ID=" + consulta.getId() + 
+                             ", Fecha=" + fechaFormateada + 
+                             ", Motivo=" + consulta.getMotivo() + 
+                             ", Estado=" + consulta.getEstado());
+        }
         
         tablaHistorialCitas.setItems(historialCitas);
+        System.out.println("Historial de citas cargado: " + historialCitas.size() + " citas");
     }
     
     private void configurarMenuExpandible() {

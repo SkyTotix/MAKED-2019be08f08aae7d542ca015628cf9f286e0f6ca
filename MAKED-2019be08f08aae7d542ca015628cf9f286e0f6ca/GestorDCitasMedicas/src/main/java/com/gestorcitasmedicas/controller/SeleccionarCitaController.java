@@ -1,7 +1,10 @@
 package com.gestorcitasmedicas.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,7 @@ import com.gestorcitasmedicas.model.Consulta;
 import com.gestorcitasmedicas.model.Medico;
 import com.gestorcitasmedicas.model.Paciente;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -75,12 +79,13 @@ public class SeleccionarCitaController {
     private ObservableList<Consulta> todasLasCitas;
     private Consulta citaSeleccionada;
     private String accion; // "cancelar" o "reprogramar"
+    private int pacienteId; // ID del paciente logueado
     
     @FXML
     private void initialize() {
         configurarTabla();
-        cargarDatos();
         configurarEventos();
+        // No cargar datos aquí, esperar a que se establezca el pacienteId
     }
     
     public void setAccion(String accion) {
@@ -92,6 +97,14 @@ public class SeleccionarCitaController {
             lblTitulo.setText("Seleccionar Cita para Reprogramar");
             btnSeleccionar.setText("Reprogramar Cita");
         }
+    }
+    
+    public void setPacienteId(int pacienteId) {
+        this.pacienteId = pacienteId;
+        System.out.println("SeleccionarCitaController - setPacienteId llamado con valor: " + this.pacienteId);
+        
+        // Cargar datos después de establecer el pacienteId
+        cargarDatos();
     }
     
     private void configurarTabla() {
@@ -131,27 +144,48 @@ public class SeleccionarCitaController {
     }
     
     private void cargarDatos() {
-        // Cargar citas simuladas
+        // Cargar citas simuladas del paciente logueado
         todasLasCitas = FXCollections.observableArrayList();
         
-        // Agregar citas de ejemplo
-        Consulta cita1 = new Consulta(1, 1, LocalDate.now().plusDays(1), LocalTime.of(9, 0), "Consulta general");
-        cita1.setEstado("Programada");
-        todasLasCitas.add(cita1);
+        // Obtener todas las citas y filtrar por el paciente actual
+        List<Consulta> todasLasConsultas = Consulta.obtenerTodas();
         
-        Consulta cita2 = new Consulta(2, 2, LocalDate.now().plusDays(2), LocalTime.of(10, 30), "Revisión");
-        cita2.setEstado("Programada");
-        todasLasCitas.add(cita2);
+        System.out.println("SeleccionarCitaController - Total de consultas en memoria: " + todasLasConsultas.size());
+        System.out.println("SeleccionarCitaController - Paciente ID buscado: " + pacienteId);
         
-        Consulta cita3 = new Consulta(3, 3, LocalDate.now().plusDays(3), LocalTime.of(14, 0), "Control");
-        cita3.setEstado("Programada");
-        todasLasCitas.add(cita3);
+        for (Consulta cita : todasLasConsultas) {
+            System.out.println("SeleccionarCitaController - Revisando cita ID=" + cita.getId() + 
+                             ", Paciente=" + cita.getIdPaciente() + 
+                             ", Fecha=" + cita.getFecha() + 
+                             ", Estado=" + cita.getEstado());
+            
+            if (cita.getIdPaciente() == pacienteId) {
+                System.out.println("SeleccionarCitaController - Cita pertenece al paciente actual");
+                
+                // Solo mostrar citas programadas para el futuro
+                if (cita.getFecha().isAfter(LocalDate.now()) || cita.getFecha().equals(LocalDate.now())) {
+                    System.out.println("SeleccionarCitaController - Cita es futura o actual, agregando a la lista");
+                    todasLasCitas.add(cita);
+                } else {
+                    System.out.println("SeleccionarCitaController - Cita es pasada, no se agrega");
+                }
+            } else {
+                System.out.println("SeleccionarCitaController - Cita no pertenece al paciente actual");
+            }
+        }
+        
+        System.out.println("SeleccionarCitaController - Total de citas filtradas: " + todasLasCitas.size());
         
         tablaCitas.setItems(todasLasCitas);
         
-        // Cargar médicos y pacientes en los combos
+        // Cargar médicos en el combo (no necesitamos cargar pacientes)
         cargarMedicos();
-        cargarPacientes();
+        
+        // Ocultar el combo de pacientes ya que solo mostramos las citas del paciente actual
+        if (cboPaciente != null) {
+            cboPaciente.setVisible(false);
+            cboPaciente.setManaged(false);
+        }
     }
     
     private void cargarMedicos() {
@@ -185,12 +219,10 @@ public class SeleccionarCitaController {
     private void filtrarCitas() {
         LocalDate fecha = datePicker.getValue();
         String medico = cboMedico.getValue();
-        String paciente = cboPaciente.getValue();
         
         List<Consulta> citasFiltradas = todasLasCitas.stream()
             .filter(cita -> fecha == null || cita.getFecha().equals(fecha))
             .filter(cita -> medico == null || ("Médico " + cita.getIdMedico()).contains(medico.split(" - ")[0]))
-            .filter(cita -> paciente == null || ("Paciente " + cita.getIdPaciente()).equals(paciente))
             .collect(Collectors.toList());
         
         tablaCitas.setItems(FXCollections.observableArrayList(citasFiltradas));
@@ -200,7 +232,6 @@ public class SeleccionarCitaController {
     private void limpiarFiltros() {
         datePicker.setValue(null);
         cboMedico.setValue(null);
-        cboPaciente.setValue(null);
         tablaCitas.setItems(todasLasCitas);
     }
     
@@ -238,8 +269,26 @@ public class SeleccionarCitaController {
     }
     
     private void abrirCancelarCita(Consulta cita) {
-        // TODO: Implementar apertura de ventana de cancelar cita
-        mostrarAlerta("Información", "Abriendo ventana de cancelar cita para: Paciente " + cita.getIdPaciente(), Alert.AlertType.INFORMATION);
+        try {
+            System.out.println("SeleccionarCitaController - Abriendo ventana de cancelar cita para cita ID: " + cita.getId());
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/CancelarCita.fxml"));
+            Parent cancelarRoot = loader.load();
+            
+            // Obtener el controlador y configurar la cita seleccionada
+            CancelarCitaController controller = loader.getController();
+            controller.setCitaSeleccionada(cita);
+            
+            Stage stage = new Stage();
+            stage.setTitle("Cancelar Cita - Paciente");
+            stage.setScene(new Scene(cancelarRoot));
+            stage.setResizable(false);
+            stage.showAndWait();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la ventana de cancelar cita", Alert.AlertType.ERROR);
+        }
     }
     
     private void abrirReprogramarCita(Consulta cita) {

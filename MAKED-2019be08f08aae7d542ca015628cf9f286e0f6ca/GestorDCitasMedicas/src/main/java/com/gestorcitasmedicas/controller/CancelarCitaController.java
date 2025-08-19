@@ -14,6 +14,7 @@ import javafx.animation.KeyValue;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import com.gestorcitasmedicas.model.Consulta;
 
 public class CancelarCitaController {
 
@@ -41,6 +42,25 @@ public class CancelarCitaController {
     // Variables para el menú expandible
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
+    private int pacienteId = 1; // ID del paciente logueado (por defecto 1)
+    private Consulta citaSeleccionada; // Cita seleccionada para cancelar
+    
+    public void setPacienteId(int pacienteId) {
+        this.pacienteId = pacienteId;
+        System.out.println("CancelarCitaController - Paciente ID establecido: " + this.pacienteId);
+        
+        // Abrir la ventana de selección de cita después de establecer el pacienteId
+        abrirSeleccionarCita();
+    }
+    
+    public void setCitaSeleccionada(Consulta cita) {
+        this.citaSeleccionada = cita;
+        System.out.println("CancelarCitaController - Cita seleccionada: ID=" + cita.getId() + 
+                         ", Fecha=" + cita.getFecha() + ", Hora=" + cita.getHora());
+        
+        // Mostrar información de la cita seleccionada
+        mostrarInformacionCita();
+    }
 
     @FXML
     private void initialize() {
@@ -53,6 +73,38 @@ public class CancelarCitaController {
         configurarEfectosHover();
         
         System.out.println("CancelarCitaController inicializado correctamente");
+    }
+    
+    private void abrirSeleccionarCita() {
+        try {
+            System.out.println("CancelarCitaController - Abriendo seleccionar cita con pacienteId: " + pacienteId);
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
+            Parent seleccionarRoot = loader.load();
+            
+            // Obtener el controlador y configurarlo para "cancelar"
+            SeleccionarCitaController controller = loader.getController();
+            System.out.println("CancelarCitaController - Controlador obtenido: " + (controller != null));
+            
+            controller.setAccion("cancelar");
+            System.out.println("CancelarCitaController - Acción establecida");
+            
+            controller.setPacienteId(pacienteId);
+            System.out.println("CancelarCitaController - PacienteId establecido en el controlador: " + pacienteId);
+            
+            Stage stage = new Stage();
+            stage.setTitle("Seleccionar Cita para Cancelar");
+            stage.setScene(new Scene(seleccionarRoot));
+            stage.setResizable(false);
+            stage.showAndWait();
+            
+            // Si se seleccionó una cita, continuar con la cancelación
+            // TODO: Implementar lógica para obtener la cita seleccionada
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la selección de citas", Alert.AlertType.ERROR);
+        }
     }
     
     private void configurarEfectosHover() {
@@ -91,9 +143,25 @@ public class CancelarCitaController {
         }
     }
 
+    private void mostrarInformacionCita() {
+        if (citaSeleccionada != null) {
+            System.out.println("CancelarCitaController - Mostrando información de la cita seleccionada");
+            // Aquí podrías mostrar la información de la cita en la interfaz
+            // Por ejemplo, en un Label o en el área de texto del motivo
+            txtMotivo.setPromptText("Motivo de cancelación para cita del " + citaSeleccionada.getFecha() + 
+                                   " a las " + citaSeleccionada.getHora());
+        }
+    }
+    
     @FXML
     private void continuar(ActionEvent event) {
         System.out.println("Continuando con la cancelación de cita...");
+        
+        // Validar que se haya seleccionado una cita
+        if (citaSeleccionada == null) {
+            mostrarAlerta("Error", "Debe seleccionar una cita para cancelar", Alert.AlertType.ERROR);
+            return;
+        }
         
         // Validar que se haya ingresado un motivo
         if (!validarMotivo()) {
@@ -108,13 +176,19 @@ public class CancelarCitaController {
         
         confirmacion.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                // Simular cancelación exitosa
+                // Cancelar la cita en memoria
                 try {
-                    System.out.println("Cita cancelada exitosamente");
-                    System.out.println("Motivo: " + txtMotivo.getText());
+                    boolean cancelacionExitosa = Consulta.actualizarEstado(citaSeleccionada.getId(), "cancelada");
                     
-                    // Mostrar ventana de confirmación exitosa
-                    mostrarConfirmacionExitosa();
+                    if (cancelacionExitosa) {
+                        System.out.println("Cita cancelada exitosamente en memoria: ID=" + citaSeleccionada.getId());
+                        System.out.println("Motivo: " + txtMotivo.getText());
+                        
+                        // Mostrar ventana de confirmación exitosa
+                        mostrarConfirmacionExitosa();
+                    } else {
+                        mostrarAlerta("Error", "No se pudo cancelar la cita", Alert.AlertType.ERROR);
+                    }
                     
                 } catch (Exception e) {
                     e.printStackTrace();

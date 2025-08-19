@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.AgendarCitaPacienteController">
+   <top>
+      <VBox style="-fx-background-color: #3B6F89;" spacing="10">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+         </padding>
+         <children>
+            <Label text="Agendar Nueva Cita" style="-fx-font-weight: bold; -fx-font-size: 24; -fx-text-fill: white;" />
+            <Label text="Complete los datos para programar su cita médica" style="-fx-font-size: 14; -fx-text-fill: #E7ECF0;" />
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox spacing="20" style="-fx-background-color: #FFFFFF;">
+         <padding>
+            <Insets top="30" right="40" bottom="30" left="40" />
+         </padding>
+         <children>
+            <!-- Formulario de agendar cita -->
+            <VBox spacing="15" style="-fx-background-color: #F8F9FA; -fx-background-radius: 10;" maxWidth="500">
+               <padding>
+                  <Insets top="25" right="25" bottom="25" left="25" />
+               </padding>
+               <children>
+                  <!-- Consultorio -->
+                  <VBox spacing="5">
+                     <Label text="Consultorio *" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                     <ComboBox fx:id="cboConsultorio" promptText="Seleccione un consultorio" prefHeight="40" prefWidth="400" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                  </VBox>
+                  
+                  <!-- Fecha -->
+                  <VBox spacing="5">
+                     <Label text="Fecha *" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                     <DatePicker fx:id="datePicker" promptText="Seleccione la fecha" prefHeight="40" prefWidth="400" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                  </VBox>
+                  
+                  <!-- Hora -->
+                  <VBox spacing="5">
+                     <Label text="Hora *" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                     <ComboBox fx:id="cboHora" promptText="Seleccione la hora" prefHeight="40" prefWidth="400" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                  </VBox>
+                  
+                  <!-- Motivo -->
+                  <VBox spacing="5">
+                     <Label text="Motivo de la consulta" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                     <TextArea fx:id="txtMotivo" promptText="Describa el motivo de su consulta" prefHeight="80" prefWidth="400" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-radius: 5;" wrapText="true" />
+                  </VBox>
+               </children>
+            </VBox>
+            
+            <!-- Información adicional -->
+            <VBox spacing="10" style="-fx-background-color: #E7ECF0; -fx-background-radius: 8;" maxWidth="500">
+               <padding>
+                  <Insets top="15" right="20" bottom="15" left="20" />
+               </padding>
+               <children>
+                  <Label text="Información importante:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
+                  <Label text="• Las citas solo se pueden programar con al menos 24 horas de anticipación" style="-fx-font-size: 12; -fx-text-fill: #666666;" />
+                  <Label text="• Los horarios disponibles son de lunes a viernes de 8:00 a 19:00" style="-fx-font-size: 12; -fx-text-fill: #666666;" />
+                  <Label text="• Lleve su identificación oficial el día de la cita" style="-fx-font-size: 12; -fx-text-fill: #666666;" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-background-color: #F5F5F5;">
+         <padding>
+            <Insets top="20" right="30" bottom="20" left="30" />
+         </padding>
+         <children>
+            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5;" prefHeight="40" prefWidth="120" onAction="#cancelar" />
+            <Button fx:id="btnAgendar" text="Agendar Cita" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5;" prefHeight="40" prefWidth="150" onAction="#agendarCita" defaultButton="true" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -47,13 +47,19 @@ public class ReprogramarCitaController {
     // Variables para el menú expandible
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
+    private int pacienteId = 1; // ID del paciente logueado (por defecto 1)
+    
+    public void setPacienteId(int pacienteId) {
+        this.pacienteId = pacienteId;
+        System.out.println("ReprogramarCitaController - Paciente ID establecido: " + this.pacienteId);
+        
+        // Abrir la ventana de selección de cita después de establecer el pacienteId
+        abrirSeleccionarCita();
+    }
 
     @FXML
     private void initialize() {
         System.out.println("ReprogramarCitaController inicializando...");
-        
-        // Primero abrir la ventana de selección de cita
-        abrirSeleccionarCita();
         
         // Configurar menú expandible
         configurarMenuExpandible();
@@ -70,12 +76,20 @@ public class ReprogramarCitaController {
     
     private void abrirSeleccionarCita() {
         try {
+            System.out.println("ReprogramarCitaController - Abriendo seleccionar cita con pacienteId: " + pacienteId);
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
             Parent seleccionarRoot = loader.load();
             
             // Obtener el controlador y configurarlo para "reprogramar"
             SeleccionarCitaController controller = loader.getController();
+            System.out.println("ReprogramarCitaController - Controlador obtenido: " + (controller != null));
+            
             controller.setAccion("reprogramar");
+            System.out.println("ReprogramarCitaController - Acción establecida");
+            
+            controller.setPacienteId(pacienteId);
+            System.out.println("ReprogramarCitaController - PacienteId establecido en el controlador: " + pacienteId);
             
             Stage stage = new Stage();
             stage.setTitle("Seleccionar Cita para Reprogramar");

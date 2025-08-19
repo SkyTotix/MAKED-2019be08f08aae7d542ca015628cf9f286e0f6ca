@@ -14,14 +14,14 @@ import javafx.animation.KeyValue;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import com.gestorcitasmedicas.controller.AgendarCitaPacienteController;
 
 public class VistaPacienteController {
 
     @FXML
     private Button btnMiPerfil;
     
-    @FXML
-    private Button btnGestionarCita;
+
     
     @FXML
     private Button btnHistorialCitas;
@@ -36,16 +36,20 @@ public class VistaPacienteController {
     private Button btnReprogramarCita;
     
     @FXML
+    private Button btnAgendarCita;
+    
+    @FXML
     private Button btnSalir;
     
     // Elementos del menú expandible
     @FXML private VBox menuLateral;
     @FXML private VBox menuItemMiPerfil;
-    @FXML private VBox menuItemGestionarCita;
+
     @FXML private VBox menuItemHistorialCitas;
     @FXML private VBox menuItemEditarInformacion;
     @FXML private VBox menuItemCancelarCita;
     @FXML private VBox menuItemReprogramarCita;
+    @FXML private VBox menuItemAgendarCita;
     @FXML private VBox menuItemSalir;
     
     // Variables para el menú expandible
@@ -150,6 +154,11 @@ public class VistaPacienteController {
                 .filter(node -> node instanceof Label)
                 .forEach(node -> node.setVisible(mostrar));
         }
+        if (menuItemAgendarCita != null) {
+            menuItemAgendarCita.getChildren().stream()
+                .filter(node -> node instanceof Label)
+                .forEach(node -> node.setVisible(mostrar));
+        }
         if (menuItemSalir != null) {
             menuItemSalir.getChildren().stream()
                 .filter(node -> node instanceof Label)
@@ -160,19 +169,19 @@ public class VistaPacienteController {
     private void configurarEfectosHover() {
         // Agregar efectos hover a los botones del menú lateral
         Button[] botonesMenu = {btnMiPerfil, btnHistorialCitas, btnEditarInformacion, 
-                               btnCancelarCita, btnReprogramarCita, btnSalir};
+                               btnCancelarCita, btnReprogramarCita, btnAgendarCita, btnSalir};
         
         for (Button boton : botonesMenu) {
-            boton.setOnMouseEntered(e -> {
-                boton.setStyle("-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 20; -fx-cursor: hand;");
-            });
-            
-            boton.setOnMouseExited(e -> {
-                boton.setStyle("-fx-background-color: transparent; -fx-background-radius: 20;");
-            });
+            if (boton != null) {
+                boton.setOnMouseEntered(e -> {
+                    boton.setStyle("-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 20; -fx-cursor: hand;");
+                });
+                
+                boton.setOnMouseExited(e -> {
+                    boton.setStyle("-fx-background-color: transparent; -fx-background-radius: 20;");
+                });
+            }
         }
-        
-
     }
 
     @FXML
@@ -249,6 +258,10 @@ public class VistaPacienteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/CancelarCita.fxml"));
             Parent cancelarRoot = loader.load();
             
+            // Obtener el controlador y configurar el ID del paciente
+            CancelarCitaController controller = loader.getController();
+            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            
             Scene nuevaEscena = new Scene(cancelarRoot);
             Stage currentStage = (Stage) btnCancelarCita.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
@@ -263,31 +276,7 @@ public class VistaPacienteController {
         }
     }
     
-    @FXML
-    private void abrirGestionarCita(ActionEvent event) {
-        try {
-            System.out.println("Abriendo gestionar cita...");
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
-            Parent seleccionarRoot = loader.load();
-            
-            // Obtener el controlador y configurarlo para "reprogramar"
-            SeleccionarCitaController controller = loader.getController();
-            controller.setAccion("reprogramar");
-            
-            Scene nuevaEscena = new Scene(seleccionarRoot);
-            Stage currentStage = (Stage) btnGestionarCita.getScene().getWindow();
-            currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Gestionar Cita - Paciente");
-            currentStage.setMaximized(true);
-            currentStage.show();
-            currentStage.centerOnScreen();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar la gestión de citas", Alert.AlertType.ERROR);
-        }
-    }
+
     
     @FXML
     private void abrirReprogramarCita(ActionEvent event) {
@@ -296,6 +285,10 @@ public class VistaPacienteController {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/ReprogramarCita.fxml"));
             Parent reprogramarRoot = loader.load();
+            
+            // Obtener el controlador y configurar el ID del paciente
+            ReprogramarCitaController controller = loader.getController();
+            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
             
             Scene nuevaEscena = new Scene(reprogramarRoot);
             Stage currentStage = (Stage) btnReprogramarCita.getScene().getWindow();
@@ -308,6 +301,32 @@ public class VistaPacienteController {
         } catch (IOException e) {
             e.printStackTrace();
             mostrarAlerta("Error", "No se pudo cargar la reprogramación de cita", Alert.AlertType.ERROR);
+        }
+    }
+    
+    @FXML
+    private void abrirAgendarCita(ActionEvent event) {
+        try {
+            System.out.println("Abriendo agendar cita...");
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/agendarCitaPaciente.fxml"));
+            Parent agendarRoot = loader.load();
+            
+            // Obtener el controlador y configurar el ID del paciente
+            AgendarCitaPacienteController controller = loader.getController();
+            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            
+            Scene nuevaEscena = new Scene(agendarRoot);
+            Stage currentStage = (Stage) btnAgendarCita.getScene().getWindow();
+            currentStage.setScene(nuevaEscena);
+            currentStage.setTitle("Agendar Cita - Paciente");
+            currentStage.setMaximized(true);
+            currentStage.show();
+            currentStage.centerOnScreen();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar la ventana de agendar cita", Alert.AlertType.ERROR);
         }
     }
     
