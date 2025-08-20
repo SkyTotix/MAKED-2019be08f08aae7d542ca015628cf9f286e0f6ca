@@ -1,5 +1,6 @@
 package com.gestorcitasmedicas;
 
+import com.gestorcitasmedicas.utils.AutoSaveManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,6 +18,10 @@ public class App extends Application {
             stage.setMaximized(true);
             stage.setTitle("Bienvenido a tu gestor de citas medicas");
             stage.setScene(scene);
+            
+            // Configurar guardado automático
+            AutoSaveManager.setupAutoSave(stage);
+            
             stage.show();
         } catch (Exception e) {
             System.err.println("Error al iniciar la aplicación: " + e.getMessage());

@@ -1,0 +1,30 @@
+# Archivos de datos de la aplicación (no incluir en el repositorio)
+data/
+*.json
+
+# Archivos compilados
+target/
+*.class
+
+# Archivos de IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Archivos de configuración local
+application.properties
+application.yml

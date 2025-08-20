@@ -10,7 +10,15 @@ import java.time.LocalTime;
 public class DatosPrueba {
     
     public static void inicializarDatosPrueba() {
-        System.out.println("Inicializando datos de prueba...");
+        System.out.println("Inicializando datos...");
+        
+        // Intentar cargar datos guardados primero
+        if (DataPersistence.loadAllData()) {
+            System.out.println("Datos cargados desde archivos de persistencia");
+            return;
+        }
+        
+        System.out.println("No se encontraron datos guardados, inicializando datos de prueba...");
         
         // Limpiar datos existentes
         Medico.limpiarLista();
@@ -95,6 +103,26 @@ public class DatosPrueba {
         System.out.println("Médicos creados: " + Medico.obtenerTodos().size());
         System.out.println("Pacientes creados: " + Paciente.obtenerTodos().size());
         System.out.println("Consultas creadas: " + Consulta.obtenerTodas().size());
+        
+        // Guardar los datos de prueba para futuras sesiones
+        guardarDatos();
+    }
+    
+    /**
+     * Guarda todos los datos actuales en archivos JSON
+     */
+    public static void guardarDatos() {
+        boolean success = DataPersistence.saveAllData(
+            Paciente.obtenerTodos(),
+            Medico.obtenerTodos(),
+            Consulta.obtenerTodas()
+        );
+        
+        if (success) {
+            System.out.println("Datos guardados exitosamente en: " + DataPersistence.getDataDirectoryPath());
+        } else {
+            System.err.println("Error al guardar los datos");
+        }
     }
     
     private static void crearConsultasPrueba() {

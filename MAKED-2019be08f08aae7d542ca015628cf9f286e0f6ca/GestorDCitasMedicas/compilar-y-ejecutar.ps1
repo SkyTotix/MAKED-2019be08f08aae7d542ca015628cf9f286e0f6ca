@@ -15,7 +15,7 @@ if (-not (Test-Path "target\classes")) {
 
 # Compilar el proyecto
 Write-Host "Compilando el proyecto..." -ForegroundColor Yellow
-javac -cp ".;javafx-sdk-21/lib/*" -d target/classes src/main/java/com/gestorcitasmedicas/*.java src/main/java/com/gestorcitasmedicas/controller/*.java src/main/java/com/gestorcitasmedicas/model/*.java src/main/java/com/gestorcitasmedicas/util/*.java src/main/java/com/gestorcitasmedicas/utils/*.java
+javac -cp ".;javafx-sdk-21/lib/*;lib/*" -d target/classes src/main/java/com/gestorcitasmedicas/*.java src/main/java/com/gestorcitasmedicas/controller/*.java src/main/java/com/gestorcitasmedicas/model/*.java src/main/java/com/gestorcitasmedicas/util/*.java src/main/java/com/gestorcitasmedicas/utils/*.java
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error en la compilacion. Revisa los errores arriba." -ForegroundColor Red
@@ -36,6 +36,6 @@ if (Test-Path "src\main\resources\com\gestorcitasmedicas\img") {
 
 # Ejecutar la aplicacion
 Write-Host "Ejecutando la aplicacion..." -ForegroundColor Yellow
-java --module-path "javafx-sdk-21/lib" --add-modules javafx.controls,javafx.fxml -cp "target/classes;javafx-sdk-21/lib/*" com.gestorcitasmedicas.App
+java --module-path "javafx-sdk-21/lib" --add-modules javafx.controls,javafx.fxml -cp "target/classes;javafx-sdk-21/lib/*;lib/*" com.gestorcitasmedicas.App
 
 Write-Host "Aplicacion terminada." -ForegroundColor Green

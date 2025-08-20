@@ -129,9 +129,34 @@ GestorDCitasMedicas/
 - **Causa:** Versión de Java incompatible
 - **Solución:** Usar Java 17 o superior
 
+## Sistema de Persistencia de Datos
+
+### **Almacenamiento Portátil:**
+- **Archivos JSON:** Los datos se guardan en archivos JSON en la carpeta `data/`
+- **Portabilidad:** Los archivos se pueden compartir entre computadoras
+- **Automático:** Los datos se guardan automáticamente al cerrar la aplicación
+- **GitHub:** Los archivos de datos están excluidos del repositorio (ver `.gitignore`)
+
+### **Estructura de Datos:**
+```
+data/
+├── pacientes.json    # Información de pacientes
+├── medicos.json      # Información de médicos
+└── consultas.json    # Información de citas médicas
+```
+
+### **Funcionamiento:**
+1. **Primera ejecución:** Se cargan datos de prueba y se guardan automáticamente
+2. **Ejecuciones posteriores:** Se cargan los datos guardados desde archivos JSON
+3. **Modificaciones:** Cualquier cambio se guarda automáticamente al cerrar la aplicación
+4. **Portabilidad:** Los archivos `data/` se pueden copiar a otra computadora
+
 ## Notas Importantes
 
-- El proyecto usa datos en memoria (no base de datos)
+- **Persistencia automática:** Los datos se mantienen entre sesiones
+- **Portabilidad completa:** Funciona en cualquier computadora sin configuración
+- **Datos de prueba:** Se incluyen usuarios de prueba para desarrollo
+- **GitHub seguro:** Los datos personales no se suben al repositorio
 - Las imágenes de perfil se cargan dinámicamente según el género del paciente
 - El sistema de sesiones mantiene el estado del usuario logueado
 - Los archivos FXML están configurados para ser portables entre sistemas

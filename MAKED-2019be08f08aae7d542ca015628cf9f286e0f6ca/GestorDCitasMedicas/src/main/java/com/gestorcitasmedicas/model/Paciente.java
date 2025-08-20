@@ -139,4 +139,18 @@ public class Paciente {
         pacientes.clear();
         nextId = 1;
     }
+    
+    // Método para cargar desde una lista (para persistencia)
+    public static void cargarDesdeLista(List<Paciente> listaPacientes) {
+        pacientes.clear();
+        pacientes.addAll(listaPacientes);
+        
+        // Actualizar el nextId al máximo ID + 1
+        nextId = pacientes.stream()
+                .mapToInt(Paciente::getId)
+                .max()
+                .orElse(0) + 1;
+        
+        System.out.println("Pacientes cargados desde persistencia: " + pacientes.size());
+    }
 }

@@ -109,4 +109,18 @@ public class Medico {
         medicos.clear();
         nextId = 1;
     }
+    
+    // Método para cargar desde una lista (para persistencia)
+    public static void cargarDesdeLista(List<Medico> listaMedicos) {
+        medicos.clear();
+        medicos.addAll(listaMedicos);
+        
+        // Actualizar el nextId al máximo ID + 1
+        nextId = medicos.stream()
+                .mapToInt(Medico::getId)
+                .max()
+                .orElse(0) + 1;
+        
+        System.out.println("Médicos cargados desde persistencia: " + medicos.size());
+    }
 }

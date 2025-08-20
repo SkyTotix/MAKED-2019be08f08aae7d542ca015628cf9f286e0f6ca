@@ -204,6 +204,20 @@ public class Consulta {
         consultas.clear();
         nextId = 1;
     }
+    
+    // Método para cargar desde una lista (para persistencia)
+    public static void cargarDesdeLista(List<Consulta> listaConsultas) {
+        consultas.clear();
+        consultas.addAll(listaConsultas);
+        
+        // Actualizar el nextId al máximo ID + 1
+        nextId = consultas.stream()
+                .mapToInt(Consulta::getId)
+                .max()
+                .orElse(0) + 1;
+        
+        System.out.println("Consultas cargadas desde persistencia: " + consultas.size());
+    }
 
     // Método para obtener información completa de la consulta
     public String getInfoCompleta() {
