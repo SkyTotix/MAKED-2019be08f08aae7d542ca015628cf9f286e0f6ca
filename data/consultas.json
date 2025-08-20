@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "idPaciente": 1,
+    "idMedico": 1,
+    "fecha": "2025-08-21",
+    "hora": "09:00:00",
+    "motivo": "Revisión cardiológica de rutina",
+    "estado": "programada"
+  },
+  {
+    "id": 2,
+    "idPaciente": 1,
+    "idMedico": 2,
+    "fecha": "2025-08-23",
+    "hora": "14:30:00",
+    "motivo": "Consulta por problemas de piel",
+    "estado": "programada"
+  },
+  {
+    "id": 3,
+    "idPaciente": 2,
+    "idMedico": 1,
+    "fecha": "2025-08-22",
+    "hora": "11:00:00",
+    "motivo": "Evaluación cardíaca por dolor en el pecho",
+    "estado": "programada"
+  },
+  {
+    "id": 4,
+    "idPaciente": 2,
+    "idMedico": 3,
+    "fecha": "2025-08-25",
+    "hora": "10:00:00",
+    "motivo": "Consulta pediátrica para su hijo",
+    "estado": "programada"
+  },
+  {
+    "id": 5,
+    "idPaciente": 3,
+    "idMedico": 2,
+    "fecha": "2025-08-21",
+    "hora": "16:00:00",
+    "motivo": "Revisión dermatológica anual",
+    "estado": "programada"
+  },
+  {
+    "id": 6,
+    "idPaciente": 3,
+    "idMedico": 1,
+    "fecha": "2025-08-18",
+    "hora": "08:30:00",
+    "motivo": "Consulta por arritmia",
+    "estado": "completada",
+    "diagnostico": "Arritmia sinusal benigna",
+    "tratamiento": "Monitoreo cardíaco por 24 horas y evitar cafeína",
+    "observaciones": "Paciente presenta arritmia sinusal que no requiere tratamiento inmediato"
+  },
+  {
+    "id": 7,
+    "idPaciente": 1,
+    "idMedico": 3,
+    "fecha": "2025-08-19",
+    "hora": "13:00:00",
+    "motivo": "Consulta pediátrica",
+    "estado": "cancelada"
+  }
+]

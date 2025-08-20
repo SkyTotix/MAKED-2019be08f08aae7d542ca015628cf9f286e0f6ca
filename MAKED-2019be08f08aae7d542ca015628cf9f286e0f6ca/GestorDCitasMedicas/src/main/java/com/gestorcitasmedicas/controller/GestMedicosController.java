@@ -223,12 +223,14 @@ public class GestMedicosController {
             Parent gestUsuariosRoot = loader.load();
             
             // Crear nueva escena
-            Scene nuevaEscena = new Scene(gestUsuariosRoot, 1200, 800);
+            Scene nuevaEscena = new Scene(gestUsuariosRoot);
             
             // Obtener la ventana actual y reemplazarla
             Stage currentStage = (Stage) menuLateral.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
             currentStage.setTitle("Gestión de Usuarios - Gestor de Citas Médicas");
+            currentStage.setMaximized(true);
+            currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {
@@ -249,12 +251,14 @@ public class GestMedicosController {
             Parent agendarCitaRoot = loader.load();
             
             // Crear nueva escena
-            Scene nuevaEscena = new Scene(agendarCitaRoot, 1200, 800);
+            Scene nuevaEscena = new Scene(agendarCitaRoot);
             
             // Obtener la ventana actual y reemplazarla
             Stage currentStage = (Stage) menuLateral.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
             currentStage.setTitle("Agendar Cita Médica - Gestor de Citas Médicas");
+            currentStage.setMaximized(true);
+            currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {
@@ -293,10 +297,12 @@ public class GestMedicosController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/mainRecepcionista.fxml"));
             Parent mainRecepcionistaRoot = loader.load();
             
-            Scene nuevaEscena = new Scene(mainRecepcionistaRoot, 1200, 800);
+            Scene nuevaEscena = new Scene(mainRecepcionistaRoot);
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(nuevaEscena);
             currentStage.setTitle("Panel Principal - Gestor de Citas Médicas");
+            currentStage.setMaximized(true);
+            currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {

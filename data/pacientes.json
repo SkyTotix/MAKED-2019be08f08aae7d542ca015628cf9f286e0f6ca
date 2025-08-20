@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "nombre": "María González",
+    "curp": "GONM800101MDFXXX01",
+    "telefono": "5598765432",
+    "matricula": "A123456",
+    "correo": "paciente@test.com",
+    "contrasena": "paciente123",
+    "rol": "paciente",
+    "tipo": "Estudiante"
+  },
+  {
+    "id": 2,
+    "nombre": "Juan López",
+    "curp": "LOPJ850515HDFXXX02",
+    "telefono": "5511223344",
+    "matricula": "B789012",
+    "correo": "juan.lopez@test.com",
+    "contrasena": "juan123",
+    "rol": "paciente",
+    "tipo": "Personal UTEZ"
+  },
+  {
+    "id": 3,
+    "nombre": "Ana Martínez",
+    "curp": "MARA900320MDFXXX03",
+    "telefono": "5566778899",
+    "matricula": "C345678",
+    "correo": "ana.martinez@test.com",
+    "contrasena": "ana123",
+    "rol": "paciente",
+    "tipo": "Estudiante"
+  }
+]

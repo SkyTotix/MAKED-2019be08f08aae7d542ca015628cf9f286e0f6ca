@@ -5,9 +5,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.AgendarCitaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="1310.0" style="-fx-background-color: #16191C;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.AgendarCitaController">
    <top>
       <Pane prefHeight="107.0" prefWidth="1366.0" style="-fx-background-color: #E7ECF0;" BorderPane.alignment="CENTER">
          <children>
@@ -16,28 +15,25 @@
                   <Image url="@img/cross.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnPerfil" layoutX="1183.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" onAction="#abrirPerfil">
-               <graphic>
-                  <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/miPerfil.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Button fx:id="btnPerfil" layoutX="1114.0" layoutY="16.0" mnemonicParsing="false" onAction="#abrirPerfil" prefHeight="66.0" prefWidth="165.0" style="-fx-background-color: #E7ECF0;" />
+            <ImageView fitHeight="60.0" fitWidth="153.0" layoutX="1120.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/miPerfil.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </top>
    <left>
-      <VBox fx:id="menuLateral" style="-fx-background-color: #3B6F89;" prefWidth="60" minWidth="60" maxWidth="200" BorderPane.alignment="CENTER">
+      <VBox fx:id="menuLateral" maxWidth="200" minWidth="60" prefWidth="60" style="-fx-background-color: #3B6F89;" BorderPane.alignment="CENTER">
          <padding>
-            <Insets top="15" right="8" bottom="15" left="8" />
+            <Insets bottom="15" left="8" right="8" top="15" />
          </padding>
          <children>
             <!-- Gestion Usuarios -->
-            <VBox fx:id="menuItemUsuarios" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+            <VBox fx:id="menuItemUsuarios" alignment="CENTER" spacing="3" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;">
                <padding>
-                  <Insets top="8" right="8" bottom="8" left="8" />
+                  <Insets bottom="8" left="8" right="8" top="8" />
                </padding>
                <children>
                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
@@ -45,14 +41,14 @@
                         <Image url="@img/iper.png" />
                      </image>
                   </ImageView>
-                  <Label text="Gestion Usuarios" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                  <Label managed="false" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="Gestion Usuarios" visible="false" />
                </children>
             </VBox>
             
             <!-- Gestion Medicos -->
-            <VBox fx:id="menuItemMedicos" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+            <VBox fx:id="menuItemMedicos" alignment="CENTER" spacing="3" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;">
                <padding>
-                  <Insets top="8" right="8" bottom="8" left="8" />
+                  <Insets bottom="8" left="8" right="8" top="8" />
                </padding>
                <children>
                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
@@ -60,14 +56,14 @@
                         <Image url="@img/imed.png" />
                      </image>
                   </ImageView>
-                  <Label text="Gestion Medicos" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                  <Label managed="false" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="Gestion Medicos" visible="false" />
                </children>
             </VBox>
             
             <!-- Gestion Citas -->
-            <VBox fx:id="menuItemCitas" style="-fx-background-color: #4A7A9A; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+            <VBox fx:id="menuItemCitas" alignment="CENTER" spacing="3" style="-fx-background-color: #4A7A9A; -fx-background-radius: 5; -fx-cursor: hand;">
                <padding>
-                  <Insets top="8" right="8" bottom="8" left="8" />
+                  <Insets bottom="8" left="8" right="8" top="8" />
                </padding>
                <children>
                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
@@ -75,14 +71,14 @@
                         <Image url="@img/ical.png" />
                      </image>
                   </ImageView>
-                  <Label text="Gestion Citas" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                  <Label managed="false" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="Gestion Citas" visible="false" />
                </children>
             </VBox>
             
             <!-- Salir -->
-            <VBox fx:id="menuItemSalir" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+            <VBox fx:id="menuItemSalir" alignment="CENTER" spacing="3" style="-fx-background-color: #3B6F89; -fx-background-radius: 5; -fx-cursor: hand;">
                <padding>
-                  <Insets top="8" right="8" bottom="8" left="8" />
+                  <Insets bottom="8" left="8" right="8" top="8" />
                </padding>
                <children>
                   <ImageView fitHeight="24" fitWidth="24" pickOnBounds="true" preserveRatio="true">
@@ -90,73 +86,76 @@
                         <Image url="@img/iexit.png" />
                      </image>
                   </ImageView>
-                  <Label text="Salir" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" visible="false" managed="false" />
+                  <Label managed="false" style="-fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="Salir" visible="false" />
                </children>
+               <VBox.margin>
+                  <Insets top="370.0" />
+               </VBox.margin>
             </VBox>
          </children>
       </VBox>
    </left>
    <center>
-      <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <VBox spacing="20" style="-fx-background-color: #FFFFFF;">
             <padding>
-               <Insets top="20" right="20" bottom="20" left="20" />
+               <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
             <children>
                <!-- Título -->
-               <HBox spacing="10" alignment="CENTER_LEFT">
+               <HBox alignment="CENTER_LEFT" spacing="10">
                   <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/ical.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblTitulo" text="Agendar Cita Médica" style="-fx-font-weight: bold; -fx-font-size: 24; -fx-text-fill: #3B6F89;" />
+                  <Label fx:id="lblTitulo" style="-fx-font-weight: bold; -fx-font-size: 24; -fx-text-fill: #3B6F89;" text="Agendar Cita Médica" />
                </HBox>
                
                <!-- Formulario de cita -->
                <VBox spacing="15" style="-fx-background-color: #F8F9FA; -fx-padding: 20; -fx-background-radius: 10;">
                   <children>
                      <!-- Primera fila: Paciente y Médico -->
-                     <HBox spacing="20" alignment="CENTER_LEFT">
-                        <VBox spacing="5" prefWidth="300">
-                           <Label text="Paciente:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
-                           <ComboBox fx:id="comboPaciente" promptText="Seleccionar paciente" prefWidth="280" />
+                     <HBox alignment="CENTER_LEFT" spacing="20">
+                        <VBox prefWidth="300" spacing="5">
+                           <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Paciente:" />
+                           <ComboBox fx:id="comboPaciente" prefWidth="280" promptText="Seleccionar paciente" />
                         </VBox>
                         
-                        <VBox spacing="5" prefWidth="300">
-                           <Label text="Médico:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
-                           <ComboBox fx:id="comboMedico" promptText="Seleccionar médico" prefWidth="280" />
+                        <VBox prefWidth="300" spacing="5">
+                           <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Médico:" />
+                           <ComboBox fx:id="comboMedico" prefWidth="280" promptText="Seleccionar médico" />
                         </VBox>
                      </HBox>
                      
                      <!-- Segunda fila: Fecha y Hora -->
-                     <HBox spacing="20" alignment="CENTER_LEFT">
-                        <VBox spacing="5" prefWidth="300">
-                           <Label text="Fecha:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
-                           <DatePicker fx:id="datePicker" promptText="Seleccionar fecha" prefWidth="280" />
+                     <HBox alignment="CENTER_LEFT" spacing="20">
+                        <VBox prefWidth="300" spacing="5">
+                           <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Fecha:" />
+                           <DatePicker fx:id="datePicker" prefWidth="280" promptText="Seleccionar fecha" />
                         </VBox>
                         
-                        <VBox spacing="5" prefWidth="300">
-                           <Label text="Horario:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
-                           <ComboBox fx:id="comboHorario" promptText="Seleccionar horario" prefWidth="280" />
+                        <VBox prefWidth="300" spacing="5">
+                           <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Horario:" />
+                           <ComboBox fx:id="comboHorario" prefWidth="280" promptText="Seleccionar horario" />
                         </VBox>
                      </HBox>
                      
                      <!-- Tercera fila: Motivo de la cita -->
                      <VBox spacing="5">
-                        <Label text="Motivo de la cita:" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" />
-                        <TextArea fx:id="txtMotivo" promptText="Describa el motivo de la cita..." prefHeight="100" wrapText="true" />
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #3B6F89;" text="Motivo de la cita:" />
+                        <TextArea fx:id="txtMotivo" prefHeight="100" promptText="Describa el motivo de la cita..." wrapText="true" />
                      </VBox>
                      
                      <!-- Calendario de disponibilidad -->
                      <VBox spacing="10">
-                        <Label text="Calendario de Disponibilidad:" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #3B6F89;" />
-                        <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #3B6F89;" text="Calendario de Disponibilidad:" />
+                        <HBox alignment="CENTER_LEFT" spacing="20">
                            <VBox spacing="10">
-                                                          <HBox spacing="10" alignment="CENTER">
-                              <Button fx:id="btnMesAnterior" text="&lt;" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#mesAnterior" />
-                              <Label fx:id="lblTituloCalendario" text="Calendario" style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #3B6F89;" />
-                              <Button fx:id="btnMesSiguiente" text="&gt;" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#mesSiguiente" />
+                                                          <HBox alignment="CENTER" spacing="10">
+                              <Button fx:id="btnMesAnterior" onAction="#mesAnterior" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold;" text="&lt;" />
+                              <Label fx:id="lblTituloCalendario" style="-fx-font-weight: bold; -fx-font-size: 18; -fx-text-fill: #3B6F89;" text="Calendario" />
+                              <Button fx:id="btnMesSiguiente" onAction="#mesSiguiente" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold;" text="&gt;" />
                            </HBox>
                           <GridPane fx:id="gridCalendario" hgap="2" vgap="2">
                              <!-- Los días se agregarán dinámicamente -->
@@ -165,14 +164,14 @@
                            
                            <!-- Leyenda de disponibilidad -->
                            <VBox spacing="10" style="-fx-background-color: #E7ECF0; -fx-padding: 15; -fx-background-radius: 5;">
-                              <Label text="Leyenda:" style="-fx-font-weight: bold; -fx-font-size: 14;" />
-                              <HBox spacing="10" alignment="CENTER_LEFT">
-                                 <Circle radius="8" fill="#FF6B6B" />
-                                 <Label text="Sin disponibilidad" style="-fx-font-size: 12;" />
+                              <Label style="-fx-font-weight: bold; -fx-font-size: 14;" text="Leyenda:" />
+                              <HBox alignment="CENTER_LEFT" spacing="10">
+                                 <Circle fill="#FF6B6B" radius="8" />
+                                 <Label style="-fx-font-size: 12;" text="Sin disponibilidad" />
                               </HBox>
-                              <HBox spacing="10" alignment="CENTER_LEFT">
-                                 <Circle radius="8" fill="#4ECDC4" />
-                                 <Label text="Disponible" style="-fx-font-size: 12;" />
+                              <HBox alignment="CENTER_LEFT" spacing="10">
+                                 <Circle fill="#4ECDC4" radius="8" />
+                                 <Label style="-fx-font-size: 12;" text="Disponible" />
                               </HBox>
                            </VBox>
                         </HBox>
@@ -181,17 +180,15 @@
                </VBox>
                
                <!-- Botones de acción -->
-               <HBox spacing="15" alignment="CENTER_RIGHT">
-                  <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#cancelarCita" />
-                  <Button fx:id="btnActualizar" text="Actualizar" style="-fx-background-color: #28A745; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#actualizarCita" visible="false" />
-                  <Button fx:id="btnAgendar" text="Agendar Cita" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" onAction="#agendarCita" />
+               <HBox alignment="CENTER_RIGHT" spacing="15">
+                  <Button fx:id="btnCancelar" onAction="#cancelarCita" style="-fx-background-color: #787A7D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" text="Cancelar" />
+                  <Button fx:id="btnActualizar" onAction="#actualizarCita" style="-fx-background-color: #28A745; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" text="Actualizar" visible="false" />
+                  <Button fx:id="btnAgendar" onAction="#agendarCita" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" text="Agendar Cita" />
                </HBox>
                
                <!-- Botón de regreso al menú principal -->
                <HBox alignment="CENTER_LEFT" spacing="10">
-                  <Button fx:id="btnVolverMenu" text="← Volver al Menú Principal" 
-                          style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5; -fx-padding: 10 20;" 
-                          onAction="#volverAlMenuPrincipal" />
+                  <Button fx:id="btnVolverMenu" onAction="#volverAlMenuPrincipal" style="-fx-background-color: #3B6F89; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 5; -fx-padding: 10 20;" text="← Volver al Menú Principal" />
                </HBox>
             </children>
          </VBox>

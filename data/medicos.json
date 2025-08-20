@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Dr. Juan Pérez",
+    "especialidad": "Cardiología",
+    "cedula": "12345678",
+    "correo": "doctor@test.com",
+    "telefono": "5512345678",
+    "horario": "Lunes a Viernes 8:00-16:00",
+    "consultorio": "Consultorio 101",
+    "contrasena": "doctor123",
+    "rol": "medico"
+  },
+  {
+    "id": 2,
+    "nombre": "Dra. María González",
+    "especialidad": "Dermatología",
+    "cedula": "87654321",
+    "correo": "dermatologa@test.com",
+    "telefono": "5598765432",
+    "horario": "Lunes a Viernes 9:00-17:00",
+    "consultorio": "Consultorio 102",
+    "contrasena": "dermatologa123",
+    "rol": "medico"
+  },
+  {
+    "id": 3,
+    "nombre": "Dr. Carlos Rodríguez",
+    "especialidad": "Pediatría",
+    "cedula": "11223344",
+    "correo": "pediatra@test.com",
+    "telefono": "5544332211",
+    "horario": "Lunes a Viernes 7:00-15:00",
+    "consultorio": "Consultorio 103",
+    "contrasena": "pediatra123",
+    "rol": "medico"
+  }
+]
