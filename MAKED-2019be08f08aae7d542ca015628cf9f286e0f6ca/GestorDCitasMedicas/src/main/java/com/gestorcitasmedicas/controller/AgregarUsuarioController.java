@@ -1,16 +1,17 @@
 package com.gestorcitasmedicas.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.gestorcitasmedicas.model.Paciente;
-import com.gestorcitasmedicas.util.DatabaseConnection;
+import com.gestorcitasmedicas.utils.DataPersistence;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class AgregarUsuarioController {
@@ -68,9 +69,9 @@ public class AgregarUsuarioController {
             cboTipo.getValue()
         );
         
-        if (guardarUsuarioEnBD(paciente)) {
+        if (guardarUsuario(paciente)) {
             mostrarAlerta("Éxito", "Usuario registrado correctamente", Alert.AlertType.INFORMATION);
-            cerrarVentana();
+            regresarAGestionUsuarios();
         } else {
             mostrarAlerta("Error", "No se pudo registrar el usuario", Alert.AlertType.ERROR);
         }
@@ -78,7 +79,16 @@ public class AgregarUsuarioController {
     
     @FXML
     private void cancelar() {
-        cerrarVentana();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar Cancelación");
+        alert.setHeaderText("Cancelar Registro");
+        alert.setContentText("¿Está seguro de que desea cancelar el registro?\nLos datos ingresados se perderán.");
+        
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                regresarAGestionUsuarios();
+            }
+        });
     }
     
     private boolean validarCampos() {
@@ -150,27 +160,30 @@ public class AgregarUsuarioController {
         return true;
     }
     
-    private boolean guardarUsuarioEnBD(Paciente paciente) {
-        String query = "INSERT INTO pacientes (nombre, curp, telefono, tipo, matricula, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+    private boolean guardarUsuario(Paciente paciente) {
+        try {
+            // Guardar el paciente usando el sistema de persistencia JSON
+            boolean guardado = paciente.guardar();
             
-            stmt.setString(1, paciente.getNombre());
-            stmt.setString(2, paciente.getCurp());
-            stmt.setString(3, paciente.getTelefono());
-            stmt.setString(4, paciente.getTipo());
-            stmt.setString(5, paciente.getMatricula());
-            stmt.setString(6, paciente.getCorreo());
-            stmt.setString(7, paciente.getContrasena());
-            stmt.setString(8, "paciente");
+            if (guardado) {
+                // Guardar todos los datos para persistencia
+                DataPersistence.saveAllData(
+                    Paciente.obtenerTodos(),
+                    com.gestorcitasmedicas.model.Medico.obtenerTodos(),
+                    com.gestorcitasmedicas.model.Consulta.obtenerTodas()
+                );
+                System.out.println("Usuario guardado exitosamente en JSON");
+                return true;
+            } else {
+                System.err.println("Error al guardar el usuario");
+                return false;
+            }
             
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-            
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            System.err.println("Error al guardar usuario: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
     
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
@@ -179,6 +192,36 @@ public class AgregarUsuarioController {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    private void regresarAGestionUsuarios() {
+        try {
+            System.out.println("Regresando a gestión de usuarios...");
+            
+            // Cargar la pantalla de gestión de usuarios
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/gestUsuarios.fxml"));
+            Parent gestUsuariosRoot = loader.load();
+            
+            // Crear nueva escena
+            Scene nuevaEscena = new Scene(gestUsuariosRoot, 1200, 800);
+            
+            // Obtener la ventana actual y reemplazarla
+            Stage currentStage = (Stage) txtNombre.getScene().getWindow();
+            currentStage.setScene(nuevaEscena);
+            currentStage.setTitle("Gestión de Usuarios - Gestor de Citas Médicas");
+            currentStage.centerOnScreen();
+            
+            System.out.println("Navegación a gestión de usuarios exitosa");
+            
+        } catch (IOException e) {
+            System.err.println("Error al cargar gestUsuarios.fxml: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo regresar a la gestión de usuarios: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            System.err.println("Error inesperado al cargar gestUsuarios.fxml: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "Error inesperado al regresar a la gestión de usuarios: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
     
     private void cerrarVentana() {

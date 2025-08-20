@@ -145,6 +145,22 @@
                      </children>
                   </VBox>
                   
+                  <!-- Agendar Cita -->
+                  <VBox fx:id="menuItemAgendarCita" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnAgendarCita" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" onAction="#abrirAgendarCita">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/AgenCita.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Agendar" textFill="WHITE" style="-fx-font-size: 10px;" visible="false" />
+                     </children>
+                  </VBox>
+                  
                   <!-- Cancelar Cita -->
                   <VBox fx:id="menuItemCancelarCita" style="-fx-background-color: transparent; -fx-background-radius: 5; -fx-cursor: hand;" spacing="3" alignment="CENTER">
                      <children>

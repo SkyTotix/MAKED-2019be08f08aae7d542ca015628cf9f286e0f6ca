@@ -110,6 +110,14 @@ public class MainRecepcionistaController {
             }
         });
         
+        // Agregar listener adicional para cambios de fecha
+        calendario.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.equals(oldValue)) {
+                System.out.println("Fecha cambiada de " + oldValue + " a " + newValue);
+                cargarConsultasDelDia(newValue);
+            }
+        });
+        
         // Cargar consultas del día actual
         cargarConsultasDelDia(LocalDate.now());
         
@@ -166,9 +174,9 @@ public class MainRecepcionistaController {
             contenedorConsultas.getChildren().clear();
         }
         
-        // Simular consultas del día
+        // Generar consultas simuladas para la fecha seleccionada
         consultasDelDia = generarConsultasSimuladas(fecha);
-        System.out.println("Consultas generadas: " + consultasDelDia.size());
+        System.out.println("Consultas generadas para fecha " + fecha + ": " + consultasDelDia.size());
         
         // Crear y mostrar las consultas
         if (consultasDelDia.isEmpty()) {
@@ -264,6 +272,10 @@ public class MainRecepcionistaController {
         
         btnEditar.setStyle("-fx-background-color: #3B6F89; -fx-text-fill: white;");
         btnCancelar.setStyle("-fx-background-color: #D32F2F; -fx-text-fill: white;");
+        
+        // Configurar eventos de los botones
+        btnEditar.setOnAction(event -> editarConsulta(consulta));
+        btnCancelar.setOnAction(event -> cancelarConsulta(consulta));
         
         botonesBox.getChildren().addAll(btnEditar, btnCancelar);
         
@@ -632,8 +644,142 @@ public class MainRecepcionistaController {
         alert.showAndWait();
     }
     
+    /**
+     * Método para editar una consulta
+     */
+    private void editarConsulta(Consulta consulta) {
+        System.out.println("Editando consulta: " + consulta.getPaciente() + " con " + consulta.getDoctor());
+        
+        try {
+            // Cargar la ventana de edición
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/editarConsulta.fxml"));
+            Parent editarRoot = loader.load();
+            
+            // Obtener el controlador y configurar la consulta
+            EditarConsultaController editarController = loader.getController();
+            editarController.setConsulta(consulta);
+            editarController.setControladorPrincipal(this);
+            
+            // Crear nueva escena
+            Scene nuevaEscena = new Scene(editarRoot, 800, 600);
+            
+            // Crear nueva ventana
+            Stage editarStage = new Stage();
+            editarStage.setScene(nuevaEscena);
+            editarStage.setTitle("Editar Consulta - " + consulta.getPaciente());
+            editarStage.setResizable(false);
+            editarStage.centerOnScreen();
+            editarStage.show();
+            
+            System.out.println("Ventana de edición abierta exitosamente");
+            
+        } catch (IOException e) {
+            System.err.println("Error al cargar editarConsulta.fxml: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar la ventana de edición: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            System.err.println("Error inesperado al cargar editarConsulta.fxml: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlerta("Error", "Error inesperado al cargar la ventana de edición: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    
+    /**
+     * Método para actualizar una consulta después de la edición
+     */
+    public void actualizarConsulta(Consulta consultaOriginal, Consulta consultaModificada) {
+        System.out.println("Actualizando consulta: " + consultaOriginal.getPaciente() + " -> " + consultaModificada.getPaciente());
+        
+        // Actualizar la consulta en la lista local
+        int index = consultasDelDia.indexOf(consultaOriginal);
+        if (index != -1) {
+            consultasDelDia.set(index, consultaModificada);
+            System.out.println("Consulta actualizada en la lista local");
+            
+            // Refrescar solo la vista sin regenerar consultas
+            refrescarVistaConsultas();
+            
+            mostrarAlerta("Consulta Actualizada", 
+                "La consulta ha sido actualizada exitosamente en la vista.\n" +
+                "Paciente: " + consultaModificada.getPaciente() + "\n" +
+                "Doctor: " + consultaModificada.getDoctor(), 
+                Alert.AlertType.INFORMATION);
+        } else {
+            mostrarAlerta("Error", "No se pudo encontrar la consulta para actualizar", Alert.AlertType.ERROR);
+        }
+    }
+    
+    /**
+     * Método para refrescar solo la vista de consultas sin regenerar datos
+     */
+    private void refrescarVistaConsultas() {
+        System.out.println("Refrescando vista de consultas...");
+        
+        // Limpiar contenedor
+        if (contenedorConsultas != null) {
+            contenedorConsultas.getChildren().clear();
+        }
+        
+        // Mostrar las consultas actuales de la lista
+        if (consultasDelDia.isEmpty()) {
+            // Mostrar mensaje cuando no hay citas
+            Label mensajeLabel = new Label("No hay citas programadas para este día");
+            mensajeLabel.setStyle("-fx-font-size: 16; -fx-text-fill: #666; -fx-font-style: italic;");
+            mensajeLabel.setAlignment(javafx.geometry.Pos.CENTER);
+            if (contenedorConsultas != null) {
+                contenedorConsultas.getChildren().add(mensajeLabel);
+            }
+            System.out.println("Mostrando mensaje de no hay citas");
+        } else {
+            for (Consulta consulta : consultasDelDia) {
+                VBox consultaBox = crearConsultaBox(consulta);
+                if (contenedorConsultas != null) {
+                    contenedorConsultas.getChildren().add(consultaBox);
+                }
+            }
+            System.out.println("Refrescadas " + consultasDelDia.size() + " consultas en la vista");
+        }
+    }
+    
+    /**
+     * Método para cancelar una consulta
+     */
+    private void cancelarConsulta(Consulta consulta) {
+        System.out.println("Cancelando consulta: " + consulta.getPaciente() + " con " + consulta.getDoctor());
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar Cancelación");
+        alert.setHeaderText("Cancelar Consulta");
+        alert.setContentText("¿Está seguro de que desea cancelar la consulta?\n\n" +
+            "Paciente: " + consulta.getPaciente() + "\n" +
+            "Doctor: " + consulta.getDoctor() + "\n" +
+            "Consultorio: " + consulta.getConsultorio() + "\n" +
+            "Horario: " + consulta.getHoraInicio() + " - " + consulta.getHoraFin() + "\n" +
+            "Motivo: " + consulta.getMotivo());
+        
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // Eliminar la consulta de la lista
+                if (consultasDelDia.remove(consulta)) {
+                    System.out.println("Consulta eliminada de la lista local");
+                    
+                    // Refrescar solo la vista sin regenerar consultas
+                    refrescarVistaConsultas();
+                    
+                    mostrarAlerta("Consulta Cancelada", 
+                        "La consulta ha sido cancelada exitosamente.\n" +
+                        "Paciente: " + consulta.getPaciente() + "\n" +
+                        "Doctor: " + consulta.getDoctor(), 
+                        Alert.AlertType.INFORMATION);
+                } else {
+                    mostrarAlerta("Error", "No se pudo cancelar la consulta", Alert.AlertType.ERROR);
+                }
+            }
+        });
+    }
+    
     // Clase interna para representar una consulta
-    private static class Consulta {
+    public static class Consulta {
         private String doctor;
         private String paciente;
         private String consultorio;

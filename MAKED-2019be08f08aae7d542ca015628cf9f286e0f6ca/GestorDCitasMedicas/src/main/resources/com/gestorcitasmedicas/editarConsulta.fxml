@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorcitasmedicas.controller.EditarConsultaController">
+   <children>
+      <!-- Header -->
+      <VBox layoutX="0.0" layoutY="0.0" prefHeight="80.0" prefWidth="800.0" style="-fx-background-color: #3B6F89;">
+         <children>
+            <Label text="Editar Consulta" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" alignment="CENTER" prefHeight="80.0" prefWidth="800.0" />
+         </children>
+      </VBox>
+      
+      <!-- Formulario -->
+      <VBox layoutX="50.0" layoutY="120.0" prefHeight="400.0" prefWidth="700.0" spacing="20">
+         <children>
+            <!-- Información del Doctor -->
+            <VBox spacing="10">
+               <Label text="Información del Doctor" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+               <HBox spacing="20">
+                  <VBox spacing="5" HBox.hgrow="ALWAYS">
+                     <Label text="Doctor:" />
+                     <TextField fx:id="txtDoctor" promptText="Nombre del doctor" />
+                  </VBox>
+                  <VBox spacing="5" HBox.hgrow="ALWAYS">
+                     <Label text="Consultorio:" />
+                     <TextField fx:id="txtConsultorio" promptText="Número de consultorio" />
+                  </VBox>
+               </HBox>
+            </VBox>
+            
+            <!-- Información del Paciente -->
+            <VBox spacing="10">
+               <Label text="Información del Paciente" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+               <TextField fx:id="txtPaciente" promptText="Nombre del paciente" />
+            </VBox>
+            
+            <!-- Horario -->
+            <VBox spacing="10">
+               <Label text="Horario de la Consulta" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+               <HBox spacing="20">
+                  <VBox spacing="5" HBox.hgrow="ALWAYS">
+                     <Label text="Hora de Inicio:" />
+                     <TextField fx:id="txtHoraInicio" promptText="HH:MM" />
+                  </VBox>
+                  <VBox spacing="5" HBox.hgrow="ALWAYS">
+                     <Label text="Hora de Fin:" />
+                     <TextField fx:id="txtHoraFin" promptText="HH:MM" />
+                  </VBox>
+               </HBox>
+            </VBox>
+            
+            <!-- Motivo -->
+            <VBox spacing="10">
+               <Label text="Motivo de la Consulta" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #3B6F89;" />
+               <TextArea fx:id="txtMotivo" promptText="Descripción del motivo de la consulta" prefHeight="80.0" wrapText="true" />
+            </VBox>
+            
+            <!-- Botones -->
+            <HBox spacing="20" alignment="CENTER_RIGHT">
+               <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #D32F2F; -fx-text-fill: white;" onAction="#cancelarEdicion" />
+               <Button fx:id="btnGuardar" text="Guardar Cambios" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" onAction="#guardarCambios" />
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
