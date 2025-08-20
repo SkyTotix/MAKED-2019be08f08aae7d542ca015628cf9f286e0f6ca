@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import com.gestorcitasmedicas.model.Consulta;
+import com.gestorcitasmedicas.utils.SesionManager;
 
 public class CancelarCitaController {
 
@@ -49,7 +50,7 @@ public class CancelarCitaController {
     // Variables para el menú expandible
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
-    private int pacienteId = 1; // ID del paciente logueado (por defecto 1)
+    private int pacienteId; // ID del paciente logueado
     private Consulta citaSeleccionada; // Cita seleccionada para cancelar
     
     public void setPacienteId(int pacienteId) {
@@ -58,6 +59,11 @@ public class CancelarCitaController {
         
         // No abrir automáticamente la ventana de selección aquí
         // Se abrirá cuando el usuario haga clic en el botón correspondiente
+    }
+    
+    public void setPacienteId() {
+        this.pacienteId = SesionManager.getInstance().getUsuarioId();
+        System.out.println("CancelarCitaController - Paciente ID obtenido de sesión: " + this.pacienteId);
     }
     
     public void setCitaSeleccionada(Consulta cita) {

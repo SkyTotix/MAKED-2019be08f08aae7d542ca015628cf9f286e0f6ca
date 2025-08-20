@@ -58,6 +58,36 @@ public class Paciente {
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
 
+    /**
+     * Determina el género del paciente basado en el CURP
+     * @return "M" para mujer, "H" para hombre, o null si no se puede determinar
+     */
+    public String getGenero() {
+        if (curp != null && curp.length() >= 11) {
+            char generoChar = curp.charAt(10); // El 11º carácter del CURP indica el género (posición 10 en 0-based)
+            if (generoChar == 'H' || generoChar == 'M') {
+                return String.valueOf(generoChar);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Verifica si el paciente es mujer
+     * @return true si es mujer, false en caso contrario
+     */
+    public boolean esMujer() {
+        return "M".equals(getGenero());
+    }
+
+    /**
+     * Verifica si el paciente es hombre
+     * @return true si es hombre, false en caso contrario
+     */
+    public boolean esHombre() {
+        return "H".equals(getGenero());
+    }
+
     // Lista estática para almacenar pacientes en memoria
     private static List<Paciente> pacientes = new ArrayList<>();
     private static int nextId = 1;

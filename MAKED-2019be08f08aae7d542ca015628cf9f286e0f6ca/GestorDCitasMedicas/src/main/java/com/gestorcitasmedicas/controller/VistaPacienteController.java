@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.animation.Timeline;
@@ -15,6 +17,8 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import com.gestorcitasmedicas.controller.AgendarCitaPacienteController;
+import com.gestorcitasmedicas.utils.SesionManager;
+import com.gestorcitasmedicas.model.Paciente;
 
 public class VistaPacienteController {
 
@@ -55,6 +59,14 @@ public class VistaPacienteController {
     // Variables para el menú expandible
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
+    
+    // Elementos para mostrar información del paciente
+    @FXML private Label lblNombrePaciente;
+    @FXML private Label lblCurp;
+    @FXML private Label lblTelefono;
+    @FXML private Label lblCorreo;
+    @FXML private Label lblMatricula;
+    @FXML private ImageView imgPerfil;
 
     @FXML
     private void initialize() {
@@ -65,6 +77,9 @@ public class VistaPacienteController {
         
         // Configurar efectos hover para los botones del menú lateral
         configurarEfectosHover();
+        
+        // Cargar información del paciente actual
+        cargarInformacionPaciente();
         
         System.out.println("VistaPacienteController inicializado correctamente");
     }
@@ -183,6 +198,78 @@ public class VistaPacienteController {
             }
         }
     }
+    
+    private void cargarInformacionPaciente() {
+        // Obtener el paciente actual de la sesión
+        Paciente pacienteActual = SesionManager.getInstance().getPacienteActual();
+        
+        if (pacienteActual != null) {
+            // Mostrar información del paciente en los labels
+            if (lblNombrePaciente != null) {
+                lblNombrePaciente.setText(pacienteActual.getNombre());
+            }
+            if (lblCurp != null) {
+                lblCurp.setText(pacienteActual.getCurp());
+            }
+            if (lblTelefono != null) {
+                lblTelefono.setText(pacienteActual.getTelefono());
+            }
+            if (lblCorreo != null) {
+                lblCorreo.setText(pacienteActual.getCorreo());
+            }
+            if (lblMatricula != null) {
+                lblMatricula.setText(pacienteActual.getMatricula());
+            }
+            
+            // Información de género para debugging
+            System.out.println("Género detectado para " + pacienteActual.getNombre() + ": " + pacienteActual.getGenero());
+            
+            // Cargar foto de perfil según el género
+            cargarFotoPerfil(pacienteActual);
+            
+            System.out.println("Información del paciente cargada: " + pacienteActual.getNombre());
+        } else {
+            System.out.println("No hay paciente en sesión");
+        }
+    }
+    
+    /**
+     * Carga la foto de perfil apropiada según el género del paciente
+     * @param paciente El paciente actual
+     */
+    private void cargarFotoPerfil(Paciente paciente) {
+        if (imgPerfil != null) {
+            try {
+                String rutaImagen;
+                if (paciente.esMujer()) {
+                    // Foto para mujer
+                    rutaImagen = "/com/gestorcitasmedicas/img/profile.png";
+                    System.out.println("Cargando foto de perfil para mujer: " + paciente.getNombre());
+                } else if (paciente.esHombre()) {
+                    // Foto para hombre
+                    rutaImagen = "/com/gestorcitasmedicas/img/miPerfil.png";
+                    System.out.println("Cargando foto de perfil para hombre: " + paciente.getNombre());
+                } else {
+                    // Foto por defecto si no se puede determinar el género
+                    rutaImagen = "/com/gestorcitasmedicas/img/iimg.png";
+                    System.out.println("Cargando foto de perfil por defecto: " + paciente.getNombre());
+                }
+                
+                Image imagen = new Image(getClass().getResourceAsStream(rutaImagen));
+                imgPerfil.setImage(imagen);
+                
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen de perfil: " + e.getMessage());
+                // En caso de error, usar imagen por defecto
+                try {
+                    Image imagenDefault = new Image(getClass().getResourceAsStream("/com/gestorcitasmedicas/img/iimg.png"));
+                    imgPerfil.setImage(imagenDefault);
+                } catch (Exception ex) {
+                    System.err.println("Error al cargar imagen por defecto: " + ex.getMessage());
+                }
+            }
+        }
+    }
 
     @FXML
     private void abrirMiPerfil(ActionEvent event) {
@@ -261,7 +348,7 @@ public class VistaPacienteController {
             // Obtener el controlador y configurarlo para "cancelar"
             SeleccionarCitaController controller = loader.getController();
             controller.setAccion("cancelar");
-            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            controller.setPacienteId(SesionManager.getInstance().getUsuarioId());
             controller.setVentanaActual((Stage) btnCancelarCita.getScene().getWindow());
             
             Scene nuevaEscena = new Scene(seleccionarRoot);
@@ -291,7 +378,7 @@ public class VistaPacienteController {
             // Obtener el controlador y configurarlo para "reprogramar"
             SeleccionarCitaController controller = loader.getController();
             controller.setAccion("reprogramar");
-            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            controller.setPacienteId(SesionManager.getInstance().getUsuarioId());
             controller.setVentanaActual((Stage) btnReprogramarCita.getScene().getWindow());
             
             Scene nuevaEscena = new Scene(seleccionarRoot);
@@ -318,7 +405,7 @@ public class VistaPacienteController {
             
             // Obtener el controlador y configurar el ID del paciente
             AgendarCitaPacienteController controller = loader.getController();
-            controller.setPacienteId(1); // TODO: Obtener ID real del paciente logueado
+            controller.setPacienteId(SesionManager.getInstance().getUsuarioId());
             
             Scene nuevaEscena = new Scene(agendarRoot);
             Stage currentStage = (Stage) btnAgendarCita.getScene().getWindow();

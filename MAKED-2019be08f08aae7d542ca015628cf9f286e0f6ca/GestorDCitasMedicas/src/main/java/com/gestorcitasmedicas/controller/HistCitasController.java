@@ -23,6 +23,7 @@ import com.gestorcitasmedicas.model.Consulta;
 import com.gestorcitasmedicas.model.Medico;
 import com.gestorcitasmedicas.model.Paciente;
 import java.util.List;
+import com.gestorcitasmedicas.utils.SesionManager;
 
 public class HistCitasController {
 
@@ -105,8 +106,8 @@ public class HistCitasController {
         // Obtener todas las consultas de la memoria
         List<Consulta> consultas = Consulta.obtenerTodas();
         
-        // Filtrar solo las consultas del paciente actual (ID = 1 por ahora)
-        int pacienteId = 1; // TODO: Obtener ID real del paciente logueado
+        // Filtrar solo las consultas del paciente actual
+        int pacienteId = SesionManager.getInstance().getUsuarioId();
         List<Consulta> consultasPaciente = Consulta.obtenerPorPaciente(pacienteId);
         
         System.out.println("Cargando historial de citas para paciente ID: " + pacienteId);

@@ -57,7 +57,7 @@
                         <StackPane prefHeight="150.0" prefWidth="150.0">
                      <children>
                               <Circle fill="#E7ECF0" radius="75.0" stroke="#3B6F89" strokeWidth="3.0" />
-                              <ImageView fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgPerfil" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                                     <Image url="@img/iimg.png" />
                            </image>
@@ -69,7 +69,7 @@
                         </StackPane>
                         
                         <!-- Patient name -->
-                        <Label text="García Tovar Marlen" textFill="#2C3E50" textAlignment="CENTER">
+                        <Label fx:id="lblNombrePaciente" text="García Tovar Marlen" textFill="#2C3E50" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
@@ -115,7 +115,7 @@
                                  <Font name="System Bold" size="16.0" />
                                </font>
                            </Label>
-                           <Label text="GATM06006MMSRVRO1" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                           <Label fx:id="lblCurp" text="GATM06006MMSRVRO1" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="0">
                               <font>
                                  <Font size="14.0" />
                                </font>
@@ -127,7 +127,7 @@
                                  <Font name="System Bold" size="16.0" />
                                </font>
                            </Label>
-                           <Label text="7775958763" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <Label fx:id="lblTelefono" text="7775958763" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <font>
                                  <Font size="14.0" />
                                </font>
@@ -139,7 +139,7 @@
                                  <Font name="System Bold" size="16.0" />
                                </font>
                            </Label>
-                           <Label text="marlen@utez.edu.mx" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <Label fx:id="lblCorreo" text="marlen@utez.edu.mx" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <font>
                                  <Font size="14.0" />
                                </font>
@@ -151,7 +151,7 @@
                                  <Font name="System Bold" size="16.0" />
                                </font>
                            </Label>
-                           <Label text="20243DS065" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <Label fx:id="lblMatricula" text="20243DS065" textFill="#2C3E50" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                                  <Font size="14.0" />
                      </font>

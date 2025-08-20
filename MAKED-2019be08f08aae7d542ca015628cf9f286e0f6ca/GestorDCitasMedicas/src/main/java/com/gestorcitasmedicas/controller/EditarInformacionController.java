@@ -6,7 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.geometry.Insets;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
@@ -15,6 +21,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
+import com.gestorcitasmedicas.utils.SesionManager;
+import com.gestorcitasmedicas.model.Paciente;
+import com.gestorcitasmedicas.controller.SeleccionarCitaController;
 
 public class EditarInformacionController {
 
@@ -22,6 +31,10 @@ public class EditarInformacionController {
     @FXML private TextField txtTelefono;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtMatricula;
+    
+    // Elementos para mostrar información del paciente
+    @FXML private Label lblNombrePaciente;
+    @FXML private ImageView imgPerfil;
     
     @FXML private Button btnMiPerfil;
 
@@ -35,6 +48,7 @@ public class EditarInformacionController {
     
     // Elementos del menú expandible
     @FXML private VBox menuLateral;
+    @FXML private AnchorPane contenidoPrincipal;
     @FXML private VBox menuItemMiPerfil;
     @FXML private VBox menuItemHistorialCitas;
     @FXML private VBox menuItemEditarInformacion;
@@ -46,11 +60,11 @@ public class EditarInformacionController {
     private Timeline timelineExpansion;
     private boolean menuExpandido = false;
 
-    // Datos originales del paciente (simulados)
-    private String curpOriginal = "GATM06006MMSRVRO1";
-    private String telefonoOriginal = "7775958763";
-    private String correoOriginal = "marlen@utez.edu.mx";
-    private String matriculaOriginal = "20243DS065";
+    // Datos originales del paciente (obtenidos dinámicamente)
+    private String curpOriginal;
+    private String telefonoOriginal;
+    private String correoOriginal;
+    private String matriculaOriginal;
 
     @FXML
     private void initialize() {
@@ -58,6 +72,9 @@ public class EditarInformacionController {
         
         // Configurar menú expandible
         configurarMenuExpandible();
+        
+        // Cargar información del paciente actual
+        cargarInformacionPaciente();
         
         // Cargar datos actuales del paciente
         cargarDatosActuales();
@@ -69,6 +86,77 @@ public class EditarInformacionController {
         configurarEfectosHover();
         
         System.out.println("EditarInformacionController inicializado correctamente");
+    }
+    
+    /**
+     * Carga la información del paciente actual de la sesión
+     */
+    private void cargarInformacionPaciente() {
+        // Obtener el paciente actual de la sesión
+        Paciente pacienteActual = SesionManager.getInstance().getPacienteActual();
+        
+        if (pacienteActual != null) {
+            // Mostrar información del paciente en la interfaz
+            if (lblNombrePaciente != null) {
+                lblNombrePaciente.setText(pacienteActual.getNombre());
+            }
+            
+            // Cargar foto de perfil según el género
+            cargarFotoPerfil(pacienteActual);
+            
+            // Cargar datos originales del paciente
+            curpOriginal = pacienteActual.getCurp();
+            telefonoOriginal = pacienteActual.getTelefono();
+            correoOriginal = pacienteActual.getCorreo();
+            matriculaOriginal = pacienteActual.getMatricula();
+            
+            System.out.println("Información del paciente cargada en perfil: " + pacienteActual.getNombre());
+        } else {
+            System.out.println("No hay paciente en sesión");
+            // Valores por defecto si no hay paciente en sesión
+            curpOriginal = "";
+            telefonoOriginal = "";
+            correoOriginal = "";
+            matriculaOriginal = "";
+        }
+    }
+    
+    /**
+     * Carga la foto de perfil apropiada según el género del paciente
+     * @param paciente El paciente actual
+     */
+    private void cargarFotoPerfil(Paciente paciente) {
+        if (imgPerfil != null) {
+            try {
+                String rutaImagen;
+                if (paciente.esMujer()) {
+                    // Foto para mujer
+                    rutaImagen = "/com/gestorcitasmedicas/img/profile.png";
+                    System.out.println("Cargando foto de perfil para mujer: " + paciente.getNombre());
+                } else if (paciente.esHombre()) {
+                    // Foto para hombre
+                    rutaImagen = "/com/gestorcitasmedicas/img/miPerfil.png";
+                    System.out.println("Cargando foto de perfil para hombre: " + paciente.getNombre());
+                } else {
+                    // Foto por defecto si no se puede determinar el género
+                    rutaImagen = "/com/gestorcitasmedicas/img/iimg.png";
+                    System.out.println("Cargando foto de perfil por defecto: " + paciente.getNombre());
+                }
+                
+                Image imagen = new Image(getClass().getResourceAsStream(rutaImagen));
+                imgPerfil.setImage(imagen);
+                
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen de perfil: " + e.getMessage());
+                // En caso de error, usar imagen por defecto
+                try {
+                    Image imagenDefault = new Image(getClass().getResourceAsStream("/com/gestorcitasmedicas/img/iimg.png"));
+                    imgPerfil.setImage(imagenDefault);
+                } catch (Exception ex) {
+                    System.err.println("Error al cargar imagen por defecto: " + ex.getMessage());
+                }
+            }
+        }
     }
     
     private void cargarDatosActuales() {
@@ -136,9 +224,9 @@ public class EditarInformacionController {
             // Hacer que el menú aparezca por encima del contenido
             menuLateral.toFront();
 
-            // Animación de expansión
-            KeyValue keyValue = new KeyValue(menuLateral.prefWidthProperty(), 200);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(300), keyValue);
+            // Animación de expansión del menú
+            KeyValue keyValueMenu = new KeyValue(menuLateral.prefWidthProperty(), 200);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(300), keyValueMenu);
             timelineExpansion.getKeyFrames().clear();
             timelineExpansion.getKeyFrames().add(keyFrame);
 
@@ -156,9 +244,9 @@ public class EditarInformacionController {
             // Detener animación anterior si está en curso
             timelineExpansion.stop();
 
-            // Animación de contracción
-            KeyValue keyValue = new KeyValue(menuLateral.prefWidthProperty(), 60);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(300), keyValue);
+            // Animación de contracción del menú
+            KeyValue keyValueMenu = new KeyValue(menuLateral.prefWidthProperty(), 60);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(300), keyValueMenu);
             timelineExpansion.getKeyFrames().clear();
             timelineExpansion.getKeyFrames().add(keyFrame);
 
@@ -230,22 +318,31 @@ public class EditarInformacionController {
             return;
         }
         
-        // Simular actualización exitosa
+        // Actualizar información del paciente
         try {
-            // Aquí se conectaría con la base de datos para actualizar la información
-            String nuevoTelefono = txtTelefono.getText();
-            String nuevoCorreo = txtCorreo.getText();
-            
-            System.out.println("Información actualizada exitosamente:");
-            System.out.println("Teléfono: " + nuevoTelefono);
-            System.out.println("Correo: " + nuevoCorreo);
-            
-            // Actualizar datos originales
-            telefonoOriginal = nuevoTelefono;
-            correoOriginal = nuevoCorreo;
-            
-            // Mostrar mensaje de éxito
-            mostrarAlerta("Éxito", "Información actualizada correctamente", Alert.AlertType.INFORMATION);
+            Paciente pacienteActual = SesionManager.getInstance().getPacienteActual();
+            if (pacienteActual != null) {
+                // Obtener nuevos valores
+                String nuevoTelefono = txtTelefono.getText().trim();
+                String nuevoCorreo = txtCorreo.getText().trim();
+                
+                // Actualizar el objeto paciente
+                pacienteActual.setTelefono(nuevoTelefono);
+                pacienteActual.setCorreo(nuevoCorreo);
+                
+                System.out.println("Información actualizada exitosamente:");
+                System.out.println("Teléfono: " + nuevoTelefono);
+                System.out.println("Correo: " + nuevoCorreo);
+                
+                // Actualizar datos originales
+                telefonoOriginal = nuevoTelefono;
+                correoOriginal = nuevoCorreo;
+                
+                // Mostrar mensaje de éxito
+                mostrarAlerta("Éxito", "Información actualizada correctamente", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No se encontró el paciente en sesión", Alert.AlertType.ERROR);
+            }
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -297,22 +394,22 @@ public class EditarInformacionController {
     @FXML
     private void abrirMiPerfil(ActionEvent event) {
         try {
-            System.out.println("Abriendo mi perfil...");
+            System.out.println("Regresando a vista principal del paciente...");
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/EditarInformacion.fxml"));
-            Parent perfilRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
+            Parent vistaRoot = loader.load();
             
-            Scene nuevaEscena = new Scene(perfilRoot);
+            Scene nuevaEscena = new Scene(vistaRoot);
             Stage currentStage = (Stage) btnMiPerfil.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
-            currentStage.setTitle("Mi Perfil - Paciente");
+            currentStage.setTitle("Vista Principal - Paciente");
             currentStage.setMaximized(true);
             currentStage.show();
             currentStage.centerOnScreen();
             
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar mi perfil", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudo cargar la vista principal", Alert.AlertType.ERROR);
         }
     }
     
@@ -347,12 +444,18 @@ public class EditarInformacionController {
     @FXML
     private void abrirCancelarCita(ActionEvent event) {
         try {
-            System.out.println("Abriendo cancelar cita...");
+            System.out.println("Abriendo selección de cita para cancelar...");
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/CancelarCita.fxml"));
-            Parent cancelarRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
+            Parent seleccionarRoot = loader.load();
             
-            Scene nuevaEscena = new Scene(cancelarRoot);
+            // Configurar el controlador para cancelar
+            SeleccionarCitaController controller = loader.getController();
+            controller.setAccion("cancelar");
+            controller.setPacienteId(SesionManager.getInstance().getUsuarioId());
+            controller.setVentanaActual((Stage) btnCancelarCita.getScene().getWindow());
+            
+            Scene nuevaEscena = new Scene(seleccionarRoot);
             Stage currentStage = (Stage) btnCancelarCita.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
             currentStage.setTitle("Cancelar Cita - Paciente");
@@ -369,13 +472,19 @@ public class EditarInformacionController {
     @FXML
     private void abrirReprogramarCita(ActionEvent event) {
         try {
-            System.out.println("Abriendo reprogramar cita...");
+            System.out.println("Abriendo selección de cita para reprogramar...");
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/ReprogramarCita.fxml"));
-            Parent reprogramarRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/seleccionarCita.fxml"));
+            Parent seleccionarRoot = loader.load();
             
-            Scene nuevaEscena = new Scene(reprogramarRoot);
-            Stage currentStage = (Stage) btnCancelarCita.getScene().getWindow();
+            // Configurar el controlador para reprogramar
+            SeleccionarCitaController controller = loader.getController();
+            controller.setAccion("reprogramar");
+            controller.setPacienteId(SesionManager.getInstance().getUsuarioId());
+            controller.setVentanaActual((Stage) btnReprogramarCita.getScene().getWindow());
+            
+            Scene nuevaEscena = new Scene(seleccionarRoot);
+            Stage currentStage = (Stage) btnReprogramarCita.getScene().getWindow();
             currentStage.setScene(nuevaEscena);
             currentStage.setTitle("Reprogramar Cita - Paciente");
             currentStage.setMaximized(true);

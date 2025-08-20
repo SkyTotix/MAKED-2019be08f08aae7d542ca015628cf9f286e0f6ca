@@ -3,6 +3,7 @@ package com.gestorcitasmedicas.controller;
 import com.gestorcitasmedicas.model.Medico;
 import com.gestorcitasmedicas.model.Paciente;
 import com.gestorcitasmedicas.utils.DatosPrueba;
+import com.gestorcitasmedicas.utils.SesionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -122,6 +123,9 @@ public class LoginController {
             // Intentar autenticar como médico
             Medico medico = Medico.autenticar(correo, contra);
             if (medico != null) {
+                // Establecer médico en sesión
+                SesionManager.getInstance().setMedicoActual(medico);
+                
                 // Autenticación como médico exitosa
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/mainDoctor.fxml"));
@@ -145,6 +149,9 @@ public class LoginController {
             // Intentar autenticar como paciente
             Paciente paciente = Paciente.autenticar(correo, contra);
             if (paciente != null) {
+                // Establecer paciente en sesión
+                SesionManager.getInstance().setPacienteActual(paciente);
+                
                 // Autenticación como paciente exitosa
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/VistaPaciente.fxml"));
