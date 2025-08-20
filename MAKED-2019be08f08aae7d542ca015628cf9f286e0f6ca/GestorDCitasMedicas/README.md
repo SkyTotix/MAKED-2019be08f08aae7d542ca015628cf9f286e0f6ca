@@ -1,109 +1,141 @@
-# Gestor de Citas Médicas
+# Sistema de Gestión de Citas Médicas
 
-Aplicación JavaFX para la gestión de citas médicas en la UTEZ.
+## Requisitos del Sistema
 
-## Requisitos
+### Software Requerido:
+- **Java JDK 17** o superior
+- **JavaFX SDK 17** o superior
+- **Maven** (opcional, para gestión de dependencias)
 
-- Java JDK 21 o superior
-- JavaFX SDK 21
-- PowerShell (para ejecutar los scripts)
+### Configuración del Entorno:
 
-## Instalación
+#### 1. Instalar Java JDK 17+
+```bash
+# Verificar versión de Java
+java -version
+```
 
-1. Asegúrate de tener JavaFX SDK 21 en el directorio del proyecto
-2. El directorio debe llamarse `javafx-sdk-21` y contener la carpeta `lib`
+#### 2. Configurar JavaFX
+**Opción A: Usando Maven (Recomendado)**
+```xml
+<!-- Agregar al pom.xml si no existe -->
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-controls</artifactId>
+    <version>17.0.2</version>
+</dependency>
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-fxml</artifactId>
+    <version>17.0.2</version>
+</dependency>
+```
 
-## Ejecución
+**Opción B: Configuración manual**
+1. Descargar JavaFX SDK desde: https://openjfx.io/
+2. Extraer en una carpeta (ej: `C:\javafx-sdk-17`)
+3. Configurar variables de entorno:
+   - `JAVAFX_HOME=C:\javafx-sdk-17`
+   - Agregar `%JAVAFX_HOME%\bin` al PATH
 
-### Opción 1: Script completo (Recomendado)
+#### 3. Configurar el IDE
+
+**IntelliJ IDEA:**
+1. File → Project Structure → Project Settings → Project
+2. SDK: Seleccionar Java 17
+3. File → Project Structure → Libraries
+4. Agregar JavaFX SDK como librería
+
+**Eclipse:**
+1. Window → Preferences → Java → Installed JREs
+2. Agregar Java 17
+3. Run Configurations → VM Arguments:
+   ```
+   --module-path "C:\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml
+   ```
+
+**NetBeans:**
+1. Tools → Options → Java → JavaFX
+2. JavaFX SDK: Seleccionar ruta del SDK
+
+## Verificación de Configuración
+
+Antes de compilar, es recomendable verificar que todo esté configurado correctamente:
+
+```powershell
+.\verificar-configuracion.ps1
+```
+
+Este script verificará:
+- Versión de Java (requiere 17+)
+- Disponibilidad de Maven
+- Estructura del proyecto
+- Configuración de JavaFX
+- Permisos de PowerShell
+
+## Compilación y Ejecución
+
+### Usando el script PowerShell (Windows):
 ```powershell
 .\compilar-y-ejecutar.ps1
 ```
 
-### Opción 2: Solo ejecutar (si ya está compilado)
-```powershell
-.\ejecutar-app.ps1
+### Usando Maven:
+```bash
+mvn clean compile
+mvn javafx:run
 ```
 
-### Opción 3: Comando manual
-```powershell
-java --module-path "javafx-sdk-21/lib" --add-modules javafx.controls,javafx.fxml -cp "target/classes;javafx-sdk-21/lib/*" com.gestorcitasmedicas.App
+### Usando Java directamente:
+```bash
+# Compilar
+javac -cp "lib/*" -d target/classes src/main/java/com/gestorcitasmedicas/**/*.java
+
+# Ejecutar
+java --module-path "lib" --add-modules javafx.controls,javafx.fxml -cp "target/classes;lib/*" com.gestorcitasmedicas.App
 ```
-
-## Credenciales de Prueba
-
-### Administradores
-- **Correo:** admin@utez.edu.mx
-- **Contraseña:** admin123
-
-### Médicos
-- **Dr. Juan Pérez (Cardiólogo)**
-  - Correo: juan.perez@utez.edu.mx
-  - Contraseña: medico123
-- **Dra. María González (Dermatóloga)**
-  - Correo: maria.gonzalez@utez.edu.mx
-  - Contraseña: medico123
-- **Dr. Carlos Rodríguez (Pediatra)**
-  - Correo: carlos.rodriguez@utez.edu.mx
-  - Contraseña: medico123
-
-### Pacientes
-- **María González (Estudiante)**
-  - Correo: paciente@test.com
-  - Contraseña: paciente123
-- **Juan López (Personal UTEZ)**
-  - Correo: juan.lopez@test.com
-  - Contraseña: juan123
-- **Ana Martínez (Estudiante)**
-  - Correo: ana.martinez@test.com
-  - Contraseña: ana123
-
-## Funcionalidades Implementadas
-
-✅ **1. Cambiar contraseña desde el perfil** - Todos los roles pueden cambiar su contraseña
-✅ **2. Admin puede crear médicos y pacientes** - Desde el panel principal
-✅ **3. Admin y doctor pueden cambiar su estado** - Botón en el perfil
-✅ **4. Creación y asignación de consultorios** - Al crear médicos
-✅ **5. Selección de cita para cancelar/reprogramar** - Ventana de selección
-✅ **6. Doctor puede modificar expediente médico** - Durante la consulta
-✅ **7. Recuperación de contraseña por email** - Cambiado de CURP a email
-✅ **8. Consultorio en gestión de médicos** - Columna agregada
-✅ **9. Botón para agregar médicos** - Formulario completo
-✅ **10. Admin puede modificar datos de médicos** - Preparado
-✅ **11. Teléfono y tipo de paciente** - Estudiante o Personal UTEZ
-✅ **12. Admin puede crear usuarios** - Formulario completo
-✅ **13. Botones para regresar al menú principal** - Navegación mejorada
 
 ## Estructura del Proyecto
 
 ```
 GestorDCitasMedicas/
-├── src/main/java/com/gestorcitasmedicas/
-│   ├── App.java                          # Punto de entrada
-│   ├── controller/                       # Controladores JavaFX
-│   ├── model/                           # Modelos de datos
-│   ├── util/                            # Utilidades
-│   └── utils/                           # Utilidades adicionales
-├── src/main/resources/com/gestorcitasmedicas/
-│   ├── *.fxml                          # Archivos de interfaz
-│   └── img/                            # Imágenes
-├── javafx-sdk-21/                      # JavaFX SDK
-├── target/classes/                     # Archivos compilados
-├── compilar-y-ejecutar.ps1             # Script completo
-├── ejecutar-app.ps1                    # Script de ejecución
-└── README.md                           # Este archivo
+├── src/
+│   ├── main/
+│   │   ├── java/com/gestorcitasmedicas/
+│   │   │   ├── controller/     # Controladores FXML
+│   │   │   ├── model/          # Modelos de datos
+│   │   │   ├── utils/          # Utilidades (SesionManager)
+│   │   │   └── App.java        # Punto de entrada
+│   │   └── resources/
+│   │       └── com/gestorcitasmedicas/
+│   │           ├── *.fxml      # Archivos de interfaz
+│   │           └── img/        # Imágenes
+├── lib/                        # Librerías JavaFX
+├── compilar-y-ejecutar.ps1     # Script de compilación
+└── README.md                   # Este archivo
 ```
 
 ## Solución de Problemas
 
-### Error: JavaFX runtime components are missing
-- Asegúrate de usar el script `compilar-y-ejecutar.ps1`
-- Verifica que `javafx-sdk-21` esté en el directorio correcto
+### Error: "JavaFX runtime components are missing"
+- **Causa:** JavaFX no está configurado correctamente
+- **Solución:** Verificar configuración de JavaFX en el IDE
 
-### Error: Could not find or load main class
-- Ejecuta la compilación primero con el script completo
-- Verifica que el directorio `target/classes` exista
+### Error: "Cannot find symbol: javafx"
+- **Causa:** JavaFX no está en el classpath
+- **Solución:** Agregar JavaFX al classpath del proyecto
 
-### Error de permisos en PowerShell
-- Ejecuta: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
-- O usa: `powershell -ExecutionPolicy Bypass -File .\compilar-y-ejecutar.ps1`
+### Error: "Unsupported major.minor version"
+- **Causa:** Versión de Java incompatible
+- **Solución:** Usar Java 17 o superior
+
+## Notas Importantes
+
+- El proyecto usa datos en memoria (no base de datos)
+- Las imágenes de perfil se cargan dinámicamente según el género del paciente
+- El sistema de sesiones mantiene el estado del usuario logueado
+- Los archivos FXML están configurados para ser portables entre sistemas
+
+## Contacto
+
+Para soporte técnico o reportar problemas, contactar al equipo de desarrollo.

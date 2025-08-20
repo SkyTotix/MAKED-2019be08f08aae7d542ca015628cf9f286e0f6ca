@@ -354,7 +354,7 @@ public class SeleccionarCitaController {
     
     @FXML
     private void cancelar() {
-        cerrarVentana();
+        regresarAVentanaAnterior();
     }
     
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
@@ -363,6 +363,26 @@ public class SeleccionarCitaController {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+    
+    private void regresarAVentanaAnterior() {
+        try {
+            // Regresar a la pantalla de editar información (Mi Perfil)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorcitasmedicas/EditarInformacion.fxml"));
+            Parent editarRoot = loader.load();
+            
+            Stage stage = (Stage) tablaCitas.getScene().getWindow();
+            stage.setScene(new Scene(editarRoot));
+            stage.setTitle("Editar Información Personal - Paciente");
+            stage.setMaximized(true);
+            stage.show();
+            stage.centerOnScreen();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Si falla, simplemente cerrar la ventana actual
+            cerrarVentana();
+        }
     }
     
     private void cerrarVentana() {
